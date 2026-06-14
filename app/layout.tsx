@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Anton, Inter } from 'next/font/google';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+import "./globals.css";
+import LenisProvider from "./providers/lenis.provider";
+
+export const anton = Anton({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-anton',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', 
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
@@ -24,10 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${inter.variable} ${anton.variable} ${anton.className} antialiased`}>
+        <LenisProvider>
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
