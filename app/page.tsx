@@ -2,16 +2,18 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ArrowUpRight, FolderCode, FolderGit, History } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-const ABOUT_TEXT = `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-Expedita deleniti rerum possimus optio voluptate perspiciatis nisi unde fugit error, 
-qui, pariatur ipsa consequatur a laborum voluptatum veniam quisquam totam veritatis!
- `;
+const ABOUT_TEXT = `I create digital experiences where code, 
+design, and imagination work together. From 
+developing full-stack applications to crafting 
+smooth animations, I enjoy building products 
+that feel alive.
+`;
 
 const menuItems = ["HOME", "ABOUT", "PROJECTS", "GALLERY", "CONTACT"];
 
@@ -52,44 +54,53 @@ const circlePositions = [
   "left-[10%] bottom-[0%]",
 ];
 
-const cards = [
+type Skill = { label: string; image: string };
+type Card = { title: string; description: string; skills: Skill[] };
+
+const cards: Card[] = [
   {
     title: "FRONTEND",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
     skills: [
-      "JAVASCRIPT + TYPESCRIPT",
-      "REACT",
-      "NEXT JS",
-      "GSAP",
-      "SHOPIFY LIQUID + STOREFRONT API (GRAPHQL)",
+      { label: "JAVASCRIPT + TYPESCRIPT", image: "/images/skills/code-snippet.webp" },
+      { label: "REACT", image: "/images/skills/code-snippet.webp" },
+      { label: "NEXT JS", image: "/images/skills/nextjs.webp" },
+      { label: "GSAP", image: "/images/skills/gsap.webp" },
+      { label: "SHOPIFY LIQUID + STOREFRONT API (GRAPHQL)", image: "/images/skills/shopify.webp" },
     ],
-    image: "/images/code-snippet.webp",
   },
   {
     title: "BACKEND",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
-    skills: ["NODE", "EXPRESS", "MONGODB", "POSTGRESQL (PRISMA)", "STRAPI"],
-    image: "/images/code-snippet.webp",
+    skills: [
+      { label: "NODE & EXPRESS", image: "/images/skills/node.webp" },
+      { label: "DATABASE - MONGODB ", image: "/images/skills/mongodb.webp" },
+      { label: "DATABASE - POSTGRESQL (PRISMA)", image: "/images/skills/postgres.webp" },
+      { label: "STRAPI", image: "/images/skills/strapi.webp" },
+    ],
   },
   {
     title: "DESIGNING",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
-    skills: ["FIGMA", "ADOBE PHOTOSHOP", "ADOBE ILLUSTRATOR"],
-    image: "/images/code-snippet.webp",
+    skills: [
+      { label: "FIGMA", image: "/images/skills/figma.webp" },
+      { label: "ADOBE PHOTOSHOP", image: "/images/skills/photoshop.webp" },
+      { label: "ADOBE ILLUSTRATOR", image: "/images/skills/illustrator.webp" },
+    ],
   },
 ];
 
 const milestones = [
-  { progress: 0.1, year: "2017", text: "Completed SEE from Pawan Prakriti School", alignment: "-translate-x-[8rem]" },
-  { progress: 0.15, year: "2019", text: "Graduated +2 From MileStone Int'l College", alignment: "-translate-y-6 -translate-x-[8rem]" },
-  { progress: 0.27, year: "2021", text: "Joined Bachelors Bsc.CSIT at Bhaktapur Multiple Campus", alignment: "-translate-x-[8rem]" },
-  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing. Learning and Growing Skills, creating personal Projects primarily in web development (MERN stack)", alignment: "translate-y-18 -translate-x-16" },
-  { progress: 0.48, year: "2024", text: "Started MERN internship at Palmmind Technology", alignment: "-translate-x-[8rem]" },
-  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-[7rem]" },
-  { progress: 0.69, year: "2024", text: "Completed Bsc.CSIT bachelor's degree", alignment: "-translate-y-8 -translate-x-[8rem]" },
+  { progress: 0.1, year: "2017", text: "Completed SEE from Pawan Prakriti School", alignment: "-translate-x-[8rem]", image: "/images/journey/2017.webp" },
+  { progress: 0.15, year: "2019", text: "Graduated +2 From MileStone Int'l College", alignment: "-translate-y-6 -translate-x-[8rem]", image: "/images/journey/2019.webp" },
+  { progress: 0.27, year: "2021", text: "Joined Bachelors Bsc.CSIT at Bhaktapur Multiple Campus", alignment: "-translate-x-[8rem]", image: "/images/journey/2021.webp" },
+  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing...", alignment: "translate-y-18 -translate-x-16", image: "/images/journey/2022.webp" },
+  { progress: 0.48, year: "2024", text: "Started MERN internship at Palmmind Technology", alignment: "-translate-x-[8rem]", image: "/images/journey/2024-internship.webp" },
+  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-[7rem]", image: "/images/journey/2024-fulltime.webp" },
+  { progress: 0.69, year: "2024", text: "Completed Bsc.CSIT bachelor's degree", alignment: "-translate-y-8 -translate-x-[8rem]", image: "/images/journey/2024-degree.webp" },
 ];
 
 const REVEAL_DELAY = 0.03;
@@ -105,6 +116,80 @@ const stats = [
   { icon: <History size={60} />, value: "1.5+", label: "Years of Experience" },
   { icon: <FolderGit size={60} />, value: "7+", label: "Personal Projects" },
 ];
+
+function CardItem({ card, index }: { card: Card; index: number }) {
+  const [activeImage, setActiveImage] = useState<string>(card.skills[0].image);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const handleEnter = (skill: Skill, j: number) => {
+    setHoveredIndex(j);
+    if (imgRef.current) {
+      gsap.to(imgRef.current, {
+        opacity: 0, scale: 0.92, duration: 0.15, ease: "power2.in",
+        onComplete: () => {
+          setActiveImage(skill.image);
+          gsap.to(imgRef.current, { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out" });
+        },
+      });
+    }
+  };
+
+  const handleLeave = () => {
+    setHoveredIndex(null);
+  };
+
+  return (
+    <div
+      className={`card-item card-${index} sticky top-0 h-screen w-full overflow-hidden`}
+      style={{ zIndex: index + 1 }}
+    >
+      <div className="card-inner w-full h-full grid grid-cols-2 origin-top bg-[#111111] text-white">
+        <div className="padding w-full h-full flex flex-col gap-12 px-16 py-12">
+          <h1 className="text-[10rem] leading-none mt-12 font-bold">{card.title}</h1>
+          <div style={{ fontFamily: "var(--font-inter)" }}>
+            <p className="text-xl text-white/60 max-w-lg">{card.description}</p>
+
+            <div className="mt-10">
+              {card.skills.map((skill, j, arr) => (
+                <div
+                  key={j}
+                  onMouseEnter={() => handleEnter(skill, j)}
+                  onMouseLeave={handleLeave}
+                  className={`group flex items-center justify-between text-lg border-white/20 border-y
+                    hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default py-5
+                    ${j === 0 ? " border-t-0"
+                      : j === arr.length - 1 && " border-b-0"
+                    }`}
+                >
+                  <p className="group-hover:translate-x-4 transition">{skill.label}</p>
+                  <ArrowUpRight
+                    size={18}
+                    className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="card-right relative flex items-center justify-center w-full h-full overflow-hidden">
+          <span
+            className="absolute top-8 left-8 text-xs tracking-widest text-white/30 transition-all duration-300"
+            style={{ fontFamily: "var(--font-inter)" }}
+          >
+          </span>
+          <img
+            ref={imgRef}
+            src={activeImage}
+            alt={card.title}
+            className="w-[80%] h-full object-contain"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const Page = () => {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -182,7 +267,6 @@ const Page = () => {
       gsap.to(".first-name .letter", { yPercent: 0, duration: 1.2, ease: "power4.out", stagger: 0.02, delay: 0.2 });
       gsap.to(".last-name .letter", { yPercent: 0, duration: 1.2, ease: "power4.out", stagger: 0.02, delay: 0.4 });
 
-      // ── Hero scroll animation ─────────────────────────────────────────
       gsap.set(".about-image", { xPercent: -50, left: "50%", top: "50%", yPercent: -50 });
       gsap.timeline({
         scrollTrigger: {
@@ -198,7 +282,6 @@ const Page = () => {
         .to(".last-name", { x: -300 }, 0)
         .to(".about-image", { width: "100%", height: "100vh", rotate: 0, ease: "none" }, 0);
 
-      //About text reveal
       gsap.set(".about-title, .about-line", { yPercent: 110 });
       gsap.to(".about-title", {
         yPercent: 0, duration: 1, ease: "power4.out",
@@ -209,16 +292,15 @@ const Page = () => {
         scrollTrigger: { trigger: ".about-section", start: "top 60%", toggleActions: "play none none reverse" },
       });
 
-      //About paragraph word-by-word reveal
       gsap.set(".about-para-word", { yPercent: 110 });
       gsap.to(".about-para-word", {
-        yPercent: 0, duration: 0.6, stagger: 0.015, ease: "power3.out",
+        yPercent: 0, duration: 0.6, stagger: 0.015, ease: "power3.out", delay: 1,
         scrollTrigger: { trigger: ".about-section", start: "top 50%", toggleActions: "play none none reverse" },
       });
 
       gsap.set(".about-stat", { opacity: 0, y: 32 });
       gsap.to(".about-stat", {
-        opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out", delay: 1.8,
         scrollTrigger: { trigger: ".about-section", start: "top 30%", toggleActions: "play none none reverse" },
       });
 
@@ -226,7 +308,6 @@ const Page = () => {
         scrollTrigger: { trigger: ".about-section", start: "top -50%", scrub: 1 },
       }).fromTo(".skill-text", { fontSize: "14rem" }, { fontSize: "2rem" });
 
-      //Card stacking
       gsap.utils.toArray<HTMLElement>(".card-inner").forEach((card, i, arr) => {
         if (i === arr.length - 1) return;
         gsap.to(card, {
@@ -240,7 +321,6 @@ const Page = () => {
         });
       });
 
-      //Marquee
       const newMarquee = document.querySelector(".marquee-track-new") as HTMLElement;
       if (newMarquee) {
         const itemWidth = newMarquee.scrollWidth / 2;
@@ -248,7 +328,6 @@ const Page = () => {
         gsap.to(newMarquee, { x: -itemWidth, duration: 40, ease: "none", repeat: -1 });
       }
 
-      //Journey zoom
       gsap.timeline({
         scrollTrigger: {
           trigger: ".journey",
@@ -262,7 +341,6 @@ const Page = () => {
 
     });
 
-    //SVG path + dot
     const svgPath = document.querySelector(".svg-container path") as SVGPathElement;
     const dot = document.querySelector(".path-dot") as HTMLElement;
     const svgEl = document.querySelector(".svg-container svg") as SVGSVGElement;
@@ -318,7 +396,6 @@ const Page = () => {
       },
     });
 
-    //Projects horizontal scroll 
     const projectTexts = gsap.utils.toArray<HTMLElement>(".project-text");
     const totalCards = projects.length;
     const scrollDistance = (totalCards - 1) * 100;
@@ -357,7 +434,6 @@ const Page = () => {
       });
     });
 
-    //Gallery scroll
     gsap.to(".gallery", {
       y: -2800,
       scrollTrigger: {
@@ -373,27 +449,24 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="home relative bg-white text-[#111111]">
+    <div className="home overflow-x-hidden relative bg-white text-[#111111]">
 
-      {/* ── Header ── */}
       <header className="padding uppercase text-xl font-extralight fixed w-full flex justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
-        <div ref={navLinksRef} className="flex gap-4">
-          <Link href="/" className="text-white">HOME</Link>
-          <Link href="/" className="text-white">ABOUT</Link>
-          <Link href="/" className="text-white">PROJECTS</Link>
-          <Link href="/" className="text-white">GALLERY</Link>
-          <Link href="/" className="text-white">CONTACT</Link>
+        <div ref={navLinksRef} className="flex gap-8" >
+          <Link href="/" className="text-white">[ HOME ]</Link>
+          <Link href="/" className="text-white">[ ABOUT ]</Link>
+          <Link href="/" className="text-white">[ PROJECTS ]</Link>
+          <Link href="/" className="text-white">[ GALLERY ]</Link>
+          <Link href="/" className="text-white">[ CONTACT ]</Link>
         </div>
         <div />
       </header>
 
-      {/* ── Menu ── */}
       <div
         ref={menuRef}
         className="fixed z-50 right-2 w-24 bg-black h-24 m-4 menu flex flex-col justify-center font-extrabold"
       >
-        {/* MENU label — disappears when expanded */}
         <span className="menu-label text-white text-xs tracking-widest font-light absolute inset-0 flex items-center justify-center pointer-events-none select-none">
           MENU
         </span>
@@ -416,28 +489,35 @@ const Page = () => {
 
       <section className="main-body">
 
-        {/* ── Hero ── */}
         <div className="hero relative w-full h-screen text-[14rem] flex flex-col items-center justify-between">
-          <div className="about-image absolute top-[50vh] left-1/2 w-32 aspect-3/4 -rotate-12 bg-white z-99">
-            <img src="/image.jpg" alt="image" className="w-full h-full object-cover" />
+          <div className="about-image absolute top-[50vh] left-1/2 w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
+            <video src="/videos/portfolio.mp4" autoPlay muted loop className="w-full h-full object-cover"></video>
           </div>
-          <h1 className="first-name flex overflow-hidden translate-y-16">
-            {"RANJIT".split("").map((char, i) => (
-              <span key={i} className="overflow-hidden">
-                <span className="letter inline-block">{char}</span>
-              </span>
-            ))}
-          </h1>
-          <h1 className="last-name flex overflow-hidden -z-2">
-            {"SHRESTHA".split("").map((char, i) => (
-              <span key={i} className="overflow-hidden">
-                <span className="letter inline-block">{char}</span>
-              </span>
-            ))}
-          </h1>
+          <div className="first-name w-full flex justify-center relative">
+            <h1 className="flex overflow-hidden translate-y-16">
+              {"RANJIT".split("").map((char, i) => (
+                <span key={i} className="overflow-hidden">
+                  <span className="letter inline-block">{char}</span>
+                </span>
+              ))}
+
+            </h1>
+            <span className="absolute text-sm tracking-[6px] right-[9%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>{`[ BASED IN KATHMANDU ]`}</span>
+
+          </div>
+
+          <div className="last-name w-full flex justify-center relative">
+            <h1 className="flex overflow-hidden -z-2">
+              {"SHRESTHA".split("").map((char, i) => (
+                <span key={i} className="overflow-hidden">
+                  <span className="letter inline-block">{char}</span>
+                </span>
+              ))}
+            </h1>
+            <span className="absolute text-sm tracking-[6px] left-[14%] underline underline-offset-8  -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span>
+          </div>
         </div>
 
-        {/* ── About ── */}
         <div className="about-section relative py-28 flex items-center">
           <div className="max-w-[70%] pl-16 flex flex-col gap-12">
 
@@ -451,9 +531,8 @@ const Page = () => {
 
             <div className="text-xl font-normal max-w-6xl ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
 
-              {/* Paragraphl */}
               <p className="text-[#666666]">
-                {"We go beyond the traditional agency model and empower people across different industries to realise their creative ambitions. From the marketing director looking for more impact, to the artist reaching out to new audiences - we have the experience, the dedication, the skills and the resources to make seemingly impossible projects happen. Our clients don't hire us, they join us. And in doing so, become Creative Giants themselves."
+                {"I’m a full-stack developer who enjoys turning ideas into interactive digital experiences. My work focuses on the MERN stack, Next.js, and modern web architectures, combining thoughtful UI, smooth animations, and powerful backend systems. I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify to create products that are both beautiful and practical. When I'm away from code, I explore graphic design and game development, constantly looking for new ways to mix creativity with technology."
                   .split(" ")
                   .map((word, i) => (
                     <span key={i} className="overflow-hidden inline-block mr-[0.25em]">
@@ -485,50 +564,12 @@ const Page = () => {
           <h1 className="text-center skill-text">SKILLS THAT I'VE BEEN <br /> WORKING ON</h1>
         </div>
 
-        {/* Card section*/}
         <div className="cards-section">
           {cards.map((card, i) => (
-            <div
-              key={i}
-              className={`card-item card-${i} sticky top-0 h-screen w-full overflow-hidden`}
-              style={{ zIndex: i + 1 }}
-            >
-              <div className="card-inner w-full h-full grid grid-cols-2 origin-top bg-[#111111] text-white">
-                <div className="padding w-full h-full flex flex-col gap-12 px-16 py-12">
-                  <h1 className="text-[10rem] leading-none mt-12 font-bold">{card.title}</h1>
-                  <div style={{ fontFamily: "var(--font-inter)" }}>
-                    <p className="text-xl text-white/60 max-w-lg">{card.description}</p>
-
-                    <div className="mt-10">
-                      {card.skills.map((skill, j, arr) => (
-                        <div
-                          key={j}
-                          className={`group flex items-center justify-between text-lg border-white/20 border-y
-                            hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default
-                            ${j === 0 ? "pb-5 border-t-0"
-                              : j === arr.length - 1 ? "pt-5 border-b-0"
-                                : "py-5"}`}
-                        >
-                          <p className="group-hover:translate-x-4 transition">{skill}</p>
-                          <ArrowUpRight
-                            size={18}
-                            className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card-right flex items-center justify-center w-full h-full bg-white/5">
-                  <img src={card.image} alt={card.title} className="w-[80%] object-contain" />
-                </div>
-              </div>
-            </div>
+            <CardItem key={i} card={card} index={i} />
           ))}
         </div>
 
-        {/* Services */}
         <section className="h-screen services-section relative overflow-hidden">
           <h1 className="text-center text-5xl my-12">SERVICES</h1>
 
@@ -583,10 +624,10 @@ const Page = () => {
                 <div className="flex justify-center">
                   {service.label.split("").map((char, index) => (
                     <span key={index} className="relative overflow-hidden inline-block leading-[0.95]">
-                      <span className="svc-letter inline-block text-black/60">
+                      <span className="svc-letter inline-block text-[#111111]/60">
                         {char === " " ? "\u00A0" : char}
                       </span>
-                      <div className="svc-letter-dup text-black absolute top-[100%] left-0 inline-block">
+                      <div className="svc-letter-dup text-[#111111] absolute top-[100%] left-0 inline-block">
                         {char === " " ? "\u00A0" : char}
                       </div>
                     </span>
@@ -597,7 +638,6 @@ const Page = () => {
           </section>
         </section>
 
-        {/*Marquee */}
         <section>
           <div className="marquee-section overflow-hidden mt-58">
             <div className="marquee-track-new flex gap-8 tracking-wider whitespace-nowrap text-8xl font-bold will-change-transform">
@@ -612,14 +652,12 @@ const Page = () => {
           </div>
         </section>
 
-        {/* Journey */}
         <section className="journey">
           <section className="my-journey pt-24 overflow-clip h-screen bg-white flex justify-center items-center">
             <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
           </section>
         </section>
 
-        {/* SVG path */}
         <div className="h-auto svg-section bg-[#111111]">
           <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
             <div
@@ -638,8 +676,15 @@ const Page = () => {
                   <p className={`text-white font-bold text-3xl leading-none ${m.alignment}`}>{m.year}</p>
                   <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex">
                     <p className="w-[30rem]">{m.text}</p>
-                    <div className="w-[32rem] h-[24rem] bg-white top-1/2 -translate-y-1/2" />
-                  </div>
+
+                    <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex">
+                      <p className="w-[30rem]">{m.text}</p>
+                      <img
+                        src={m.image}
+                        alt={m.year}
+                        className="w-[32rem] h-[24rem] object-cover top-1/2 -translate-y-1/2"
+                      />
+                    </div>                  </div>
                 </div>
               </div>
             ))}
@@ -656,7 +701,6 @@ const Page = () => {
 
       </section>
 
-      {/*Projects*/}
       <div className="bg-[#111111] h-screen px-[12rem] py-[5rem] projects-section">
         <div className="overflow-x-hidden w-full h-[80%]">
           <div className="projects flex w-full h-full">
@@ -689,7 +733,6 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Blogs */}
       <div className="grid grid-cols-2 h-screen overflow-hidden px-[3rem] py-12 blog-section">
         <div>
           <h1 className="text-5xl">LATEST BLOGS</h1>
@@ -707,7 +750,6 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Gallery */}
       <div className="h-screen w-full gallery-section overflow-hidden">
         <div className="flex flex-col h-full items-center justify-center">
           <h1 className="text-[8rem]">MY GALLERY</h1>
@@ -724,7 +766,6 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <footer>
         <div className="px-12 grid grid-cols-[1fr_1.5fr] gap-28 text-[8rem] w-full">
           <div className="leading-36">
@@ -751,13 +792,14 @@ const Page = () => {
             <div className="col-span-2 flex flex-col">
               <textarea className="w-full border-b border-gray-400 focus:outline-0 text-4xl text-black placeholder:text-[#111111] py-3 resize-none bg-transparent" placeholder="Write your message here..." rows={1} />
             </div>
-            <button className="text-lg bg-red-500 justify-self-start px-6 py-3 text-white">Send Message</button>
+            <button className="text-lg bg-[#111111] justify-self-start px-6 py-3 text-white">Send Message</button>
           </div>
         </div>
 
         <div className="bg-[#111111] text-white py-16 w-full px-12 mt-24">
           <div className="flex justify-between">
-            <h1 className="text-[20vw] tracking-tight leading-90">RANJIT</h1>
+            <h1 className="text-[20vw] tracking-tight leading-90">RANJIT
+            </h1>
             <h1 className="text-[20vw] tracking-tight leading-90">XTHA</h1>
           </div>
 
