@@ -15,6 +15,14 @@ smooth animations, I enjoy building products
 that feel alive.
 `;
 
+const ABOUT_PARA = `I'm a full-stack developer who enjoys turning ideas into interactive digital experiences.
+My work focuses on the MERN stack, Next.js, and modern web architectures,
+combining thoughtful UI, smooth animations, and powerful backend systems.
+I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify
+to create products that are both beautiful and practical. When I'm away from
+code, I explore graphic design and game development, constantly looking for
+new ways to mix creativity with technology.`;
+
 const menuItems = ["HOME", "ABOUT", "PROJECTS", "GALLERY", "CONTACT"];
 
 const services = [
@@ -63,11 +71,11 @@ const cards: Card[] = [
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
     skills: [
-      { label: "JAVASCRIPT + TYPESCRIPT", image: "/images/skills/code-snippet.webp" },
-      { label: "REACT", image: "/images/skills/code-snippet.webp" },
-      { label: "NEXT JS", image: "/images/skills/nextjs.webp" },
-      { label: "GSAP", image: "/images/skills/gsap.webp" },
-      { label: "SHOPIFY LIQUID + STOREFRONT API (GRAPHQL)", image: "/images/skills/shopify.webp" },
+      { label: "JAVASCRIPT + TYPESCRIPT", image: "/images/skills/jsts.png" },
+      { label: "REACT", image: "/images/skills/react.png" },
+      { label: "NEXT JS", image: "/images/skills/next.png" },
+      { label: "GSAP", image: "/images/skills/gsap.png" },
+      { label: "SHOPIFY LIQUID + STOREFRONT API (GRAPHQL)", image: "/images/skills/shopify.png" },
     ],
   },
   {
@@ -75,10 +83,10 @@ const cards: Card[] = [
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
     skills: [
-      { label: "NODE & EXPRESS", image: "/images/skills/node.webp" },
-      { label: "DATABASE - MONGODB ", image: "/images/skills/mongodb.webp" },
-      { label: "DATABASE - POSTGRESQL (PRISMA)", image: "/images/skills/postgres.webp" },
-      { label: "STRAPI", image: "/images/skills/strapi.webp" },
+      { label: "NODE & EXPRESS", image: "/images/skills/node.png" },
+      { label: "DATABASE - MONGODB ", image: "/images/skills/mongodb.png" },
+      { label: "DATABASE - POSTGRESQL (PRISMA)", image: "/images/skills/prisma.png" },
+      { label: "STRAPI", image: "/images/skills/strapi.png" },
     ],
   },
   {
@@ -94,21 +102,24 @@ const cards: Card[] = [
 ];
 
 const milestones = [
-  { progress: 0.1, year: "2017", text: "Completed SEE from Pawan Prakriti School", alignment: "-translate-x-[8rem]", image: "/images/journey/2017.webp" },
-  { progress: 0.15, year: "2019", text: "Graduated +2 From MileStone Int'l College", alignment: "-translate-y-6 -translate-x-[8rem]", image: "/images/journey/2019.webp" },
-  { progress: 0.27, year: "2021", text: "Joined Bachelors Bsc.CSIT at Bhaktapur Multiple Campus", alignment: "-translate-x-[8rem]", image: "/images/journey/2021.webp" },
-  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing...", alignment: "translate-y-18 -translate-x-16", image: "/images/journey/2022.webp" },
-  { progress: 0.48, year: "2024", text: "Started MERN internship at Palmmind Technology", alignment: "-translate-x-[8rem]", image: "/images/journey/2024-internship.webp" },
-  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-[7rem]", image: "/images/journey/2024-fulltime.webp" },
-  { progress: 0.69, year: "2024", text: "Completed Bsc.CSIT bachelor's degree", alignment: "-translate-y-8 -translate-x-[8rem]", image: "/images/journey/2024-degree.webp" },
+  { progress: 0.1, year: "2017", text: "Completed SEE from Pawan Prakriti School", alignment: "-translate-x-[8rem]", image: "/images/journey/pawan.jpeg" },
+  { progress: 0.15, year: "2019", text: "Graduated +2 From MileStone Int'l College", alignment: "-translate-y-6 -translate-x-[8rem]", image: "/images/journey/milestone.jpg" },
+  { progress: 0.27, year: "2021", text: "Joined Bachelors Bsc.CSIT at Bhaktapur Multiple Campus", alignment: "-translate-x-[8rem]", image: "/images/journey/bmc.jpeg" },
+  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing...", alignment: "translate-y-18 -translate-x-16", image: "/videos/portfolio.mp4" },
+  { progress: 0.48, year: "2024", text: "Started MERN internship at Palmmind Technology", alignment: "-translate-x-[8rem]", image: "/images/journey/palmmind-logo.webp" },
+  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-[7rem]", image: "/images/journey/palmmind-logo.webp" },
+  { progress: 0.69, year: "2024", text: "Completed Bsc.CSIT bachelor's degree", alignment: "-translate-y-8 -translate-x-[8rem]", image: "/images/journey/bmc.jpeg" },
 ];
 
 const REVEAL_DELAY = 0.03;
 
 const projects = [
-  { id: "01", title: "PROJECT TITLE", description: "Project description to be showed in this section.", tags: ["REACT", "GSAP", "FIGMA"], bg: "bg-red-500" },
-  { id: "02", title: "PROJECT TITLE", description: "Project description to be showed in this section.", tags: ["NEXT JS", "TYPESCRIPT", "FIGMA"], bg: "bg-blue-500" },
-  { id: "03", title: "PROJECT TITLE", description: "Project description to be showed in this section.", tags: ["NODE", "MONGODB", "EXPRESS"], bg: "bg-green-500" },
+  { title: "TriMandu", description: "A Tourist Destination Planner utlizing A*, Held Karp, Cosine Similarity and OSM data to provide shorest optimize routes and round trips, allowing discoering of popular destinations in kathmandu.", tags: ["NODE", "REACT", "OSM", "POSTGRESQL"], image: "/images/projects/tripmandu.png" },
+  { title: "Portfolio Website", description: "A portfolio website created using Next and GSAP for modern and elegant design.", tags: ["NEXTJS", "GSAP"], image: "/images/projects/portfolio.png" },
+  { title: "E-Commerce Website", description: "An e-commerce website built with MERN, utilizing cloudinary and esewa payment integration.", tags: ["MERN", "CLOUDINARY", "ESEWA"], image: "/images/projects/ecommerce.png" },
+  { title: "Nepflix", description: "A movie website utilizing data from TMDB", tags: ["REACT", "TMDB", "CLOUDINARY  "], image: "/images/projects/nepflix.png" },
+  { title: "Chat Application", description: "A real-time chat application built with socket.io", tags: ["SOCKET.IO", "NODE", "REACT"], image: "/images/projects/chatapp.png" },
+  { title: "Old Portfolio ", description: "A previous version of my portfolio website", tags: ["REACT", "GSAP"], image: "/images/projects/old-portfolio.png" },
 ];
 
 const stats = [
@@ -252,6 +263,17 @@ const Page = () => {
         onEnterBack: () => gsap.to(menu, { opacity: 0, pointerEvents: "none", duration: 0.3 }),
       });
 
+      gsap.set('.hero-location',{
+        yPercent: 100,
+      });
+
+      gsap.to('.hero-location',{
+        yPercent: 0,
+        duration:0.4,
+        delay:0.7,
+        ease: "power3.out",
+      });
+
 
       ScrollTrigger.create({
         trigger: ".hero",
@@ -294,7 +316,7 @@ const Page = () => {
 
       gsap.set(".about-para-word", { yPercent: 110 });
       gsap.to(".about-para-word", {
-        yPercent: 0, duration: 0.6, stagger: 0.015, ease: "power3.out", delay: 1,
+        yPercent: 0, duration: 0.8, stagger: 0.1, ease: "power4.out", delay: 0.8,
         scrollTrigger: { trigger: ".about-section", start: "top 50%", toggleActions: "play none none reverse" },
       });
 
@@ -422,13 +444,13 @@ const Page = () => {
     projectsTl.to(".projects", { xPercent: -scrollDistance, ease: "none" });
 
     projectTexts.forEach((text) => {
-      gsap.fromTo(text, { x: 200 }, {
+      gsap.fromTo(text, { x: 300 }, {
         x: 0, ease: "none",
         scrollTrigger: {
           trigger: text.closest(".shrink-0"),
           containerAnimation: projectsTl,
-          start: "left 90%",
-          end: "left 20%",
+          start: "left 80%",
+          end: "left 10%",
           scrub: 1,
         },
       });
@@ -449,7 +471,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="home overflow-x-hidden relative bg-white text-[#111111]">
+    <div className="home relative bg-white text-[#111111]">
 
       <header className="padding uppercase text-xl font-extralight fixed w-full flex justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
@@ -489,7 +511,7 @@ const Page = () => {
 
       <section className="main-body">
 
-        <div className="hero relative w-full h-screen text-[14rem] flex flex-col items-center justify-between">
+        <div className="hero relative w-full h-screen text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
           <div className="about-image absolute top-[50vh] left-1/2 w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
             <video src="/videos/portfolio.mp4" autoPlay muted loop className="w-full h-full object-cover"></video>
           </div>
@@ -502,7 +524,13 @@ const Page = () => {
               ))}
 
             </h1>
-            <span className="absolute text-sm tracking-[6px] right-[9%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>{`[ BASED IN KATHMANDU ]`}</span>
+
+            <span className="hidden lg:block absolute overflow-hidden text-sm tracking-[4px]  2xl:tracking-[6px] left-[82%] xl:left-[80%] 2xl:left-[76%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>
+              <span className="inline-block hero-location whitespace-nowrap">
+                {`[ BASED IN KATHMANDU ]`}
+              </span>
+            </span>
+
 
           </div>
 
@@ -514,11 +542,11 @@ const Page = () => {
                 </span>
               ))}
             </h1>
-            <span className="absolute text-sm tracking-[6px] left-[14%] underline underline-offset-8  -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span>
+            {/* <span className="absolute text-sm tracking-[6px] left-[14%] underline underline-offset-8  -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span> */}
           </div>
         </div>
 
-        <div className="about-section relative py-28 flex items-center">
+        <div className="about-section relative py-28 flex flex-col lg:flex-row items-center">
           <div className="max-w-[70%] pl-16 flex flex-col gap-12">
 
             <div className="text-6xl tracking-tight font-light" style={{ fontFamily: "var(--font-inter)" }}>
@@ -529,16 +557,14 @@ const Page = () => {
               ))}
             </div>
 
-            <div className="text-xl font-normal max-w-6xl ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
+            <div className="text-xl font-normal max-w-6xl ml-0 lg:ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
 
               <p className="text-[#666666]">
-                {"I’m a full-stack developer who enjoys turning ideas into interactive digital experiences. My work focuses on the MERN stack, Next.js, and modern web architectures, combining thoughtful UI, smooth animations, and powerful backend systems. I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify to create products that are both beautiful and practical. When I'm away from code, I explore graphic design and game development, constantly looking for new ways to mix creativity with technology."
-                  .split(" ")
-                  .map((word, i) => (
-                    <span key={i} className="overflow-hidden inline-block mr-[0.25em]">
-                      <span className="about-para-word inline-block">{word}</span>
-                    </span>
-                  ))}
+                {ABOUT_PARA.split("\n").map((line, i) => (
+                  <span key={i} className="overflow-hidden block">
+                    <span className="about-para-word inline-block">{line}</span>
+                  </span>
+                ))}
               </p>
 
               <div className="flex justify-between gap-6 mt-6">
@@ -658,7 +684,7 @@ const Page = () => {
           </section>
         </section>
 
-        <div className="h-auto svg-section bg-[#111111]">
+        <div className="h-auto svg-section bg-[#111111] overflow-hidden">
           <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
             <div
               className="path-dot absolute w-12 h-12 bg-white rounded-full z-10 pointer-events-none"
@@ -668,23 +694,32 @@ const Page = () => {
             {milestones.map((m, i) => (
               <div
                 key={i}
-                className={`milestone-${i} absolute z-20 opacity-0 scale-0 pointer-events-none`}
+                className={`milestone-${i} absolute z-20 opacity-0 scale-0 pointer-events-none w-full`}
                 style={{ transform: "translate(-50%, -50%)" }}
               >
                 <div className="w-20 h-20 rounded-full translate-[-50%] bg-white" />
-                <div className="absolute top-0">
+                <div className="absolute top-0 ">
                   <p className={`text-white font-bold text-3xl leading-none ${m.alignment}`}>{m.year}</p>
-                  <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex">
-                    <p className="w-[30rem]">{m.text}</p>
+                  <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex w-full gap-24">
+                    <p className="max-w-[30rem]">{m.text}</p>
 
-                    <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex">
-                      <p className="w-[30rem]">{m.text}</p>
+                    {m.image.endsWith(".mp4") || m.image.endsWith(".webm") ? (
+                      <video
+                        src={m.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-[38rem] h-[24rem] object-contain top-1/2 -translate-y-1/2"
+                      />
+                    ) : (
                       <img
                         src={m.image}
                         alt={m.year}
-                        className="w-[32rem] h-[24rem] object-cover top-1/2 -translate-y-1/2"
+                        className="max-w-[38rem] max-h-[24rem] object-contain top-1/2 -translate-y-1/2"
                       />
-                    </div>                  </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -701,20 +736,27 @@ const Page = () => {
 
       </section>
 
-      <div className="bg-[#111111] h-screen px-[12rem] py-[5rem] projects-section">
+      <div className="bg-[#111111] h-screen px-[4rem] py-[5rem] projects-section">
         <div className="overflow-x-hidden w-full h-[80%]">
-          <div className="projects flex w-full h-full">
+          <div className="projects flex w-full h-full gap-14">
             {projects.map((project, i) => (
-              <div key={i} className="shrink-0 grid grid-cols-[2fr_1.3fr] gap-12 h-full w-full">
-                <div className={`${project.bg} w-full h-full`} />
+              <div key={i} className="shrink-0 grid grid-cols-[2.3fr_1fr] gap-14 h-full w-full">
+                <div className={` w-full h-full`} >
+                  <img src={project.image} alt={project.title} className="object-fill h-full w-full" />
+                </div>
                 <div className="flex flex-col justify-between project-text">
-                  <h1 className="text-5xl text-white">PROJECT {project.id}</h1>
-                  <div>
-                    <h1 className="text-3xl text-white">{project.title}</h1>
-                    <p className="text-lg text-white">{project.description}</p>
-                    <div className="text-white flex gap-4">
-                      {project.tags.map((tag, j) => <p key={j}>{tag}</p>)}
+                  <h1 className="text-6xl text-white">PROJECT {i + 1}</h1>
+                  <div className="space-y-4">
+                    <h1 className="text-4xl text-white">{project.title}</h1>
+                    <div>
+                      {
+                        project.tags.map((tag, j) => (
+                          <span key={j} className="tracking-widest underline underline-offset-8 text-white/50 mr-6" style={{ fontFamily: "var(--font-inter)" }}>{tag}</span>
+                        ))
+                      }
                     </div>
+                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-lg text-white">{project.description}</p>
+
                   </div>
                 </div>
               </div>
@@ -822,9 +864,9 @@ const Page = () => {
                 <p className="text-2xl font-normal">Thanks for visiting. Ready to start a conversation?</p>
                 <p className="text-sm mt-2">Reach out via email or connect with me on LinkedIn and GitHub. I'll get back to you as soon as possible.</p>
               </div>
-              <div className="w-full">
+              <div className="w-full ">
                 <p>Lalitpur, Nepal</p>
-                <div className="flex gap-6">
+                <div className="flex gap-6 items-end">
                   <p>shrestha.ranjit.np@gmail.com</p>
                   <a href="">
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -840,6 +882,9 @@ const Page = () => {
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                       <path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM252.8 8c-138.7 0-244.8 105.3-244.8 244 0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1 100-33.2 167.8-128.1 167.8-239 0-138.7-112.5-244-251.2-244zM105.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
                     </svg>
+                  </a>
+                  <a href="">
+                    <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496zM356.7 372.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z" /></svg>
                   </a>
                 </div>
               </div>
