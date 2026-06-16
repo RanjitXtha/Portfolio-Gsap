@@ -430,60 +430,60 @@ const Page = () => {
 
     });
 
-    // const svgPath = document.querySelector(".svg-container path") as SVGPathElement;
-    // const dot = document.querySelector(".path-dot") as HTMLElement;
-    // const svgEl = document.querySelector(".svg-container svg") as SVGSVGElement;
-    // const svgRect = svgEl.getBoundingClientRect();
-    // const containerRect = document.querySelector(".svg-container")!.getBoundingClientRect();
-    // const pathLength = svgPath.getTotalLength();
+    const svgPath = document.querySelector(".svg-container path") as SVGPathElement;
+    const dot = document.querySelector(".path-dot") as HTMLElement;
+    const svgEl = document.querySelector(".svg-container svg") as SVGSVGElement;
+    const svgRect = svgEl.getBoundingClientRect();
+    const containerRect = document.querySelector(".svg-container")!.getBoundingClientRect();
+    const pathLength = svgPath.getTotalLength();
 
-    // if (svgPath && dot) {
-    //   gsap.set(svgPath, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
+    if (svgPath && dot) {
+      gsap.set(svgPath, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
 
-    //   const scrollConfig = {
-    //     trigger: ".svg-section",
-    //     start: "top 150",
-    //     end: "bottom bottom",
-    //     scrub: 1,
-    //   };
+      const scrollConfig = {
+        trigger: ".svg-section",
+        start: "top 150",
+        end: "bottom bottom",
+        scrub: 1,
+      };
 
-    //   gsap.to(svgPath, { strokeDashoffset: 0, ease: "none", scrollTrigger: scrollConfig });
-    //   gsap.to(dot, {
-    //     ease: "none",
-    //     motionPath: { path: svgPath, align: svgPath, alignOrigin: [0.5, 0.5], autoRotate: false },
-    //     scrollTrigger: scrollConfig,
-    //   });
-    // }
+      gsap.to(svgPath, { strokeDashoffset: 0, ease: "none", scrollTrigger: scrollConfig });
+      gsap.to(dot, {
+        ease: "none",
+        motionPath: { path: svgPath, align: svgPath, alignOrigin: [0.5, 0.5], autoRotate: false },
+        scrollTrigger: scrollConfig,
+      });
+    }
 
-    // milestones.forEach((milestone, i) => {
-    //   const point = svgPath.getPointAtLength(milestone.progress * pathLength);
-    //   const scaleX = svgRect.width / 782;
-    //   const scaleY = svgRect.height / 3297;
-    //   const x = svgRect.left - containerRect.left + point.x * scaleX;
-    //   const y = svgRect.top - containerRect.top + point.y * scaleY;
-    //   const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
-    //   if (el) { el.style.left = `${x}px`; el.style.top = `${y}px`; }
-    // });
+    milestones.forEach((milestone, i) => {
+      const point = svgPath.getPointAtLength(milestone.progress * pathLength);
+      const scaleX = svgRect.width / 782;
+      const scaleY = svgRect.height / 3297;
+      const x = svgRect.left - containerRect.left + point.x * scaleX;
+      const y = svgRect.top - containerRect.top + point.y * scaleY;
+      const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
+      if (el) { el.style.left = `${x}px`; el.style.top = `${y}px`; }
+    });
 
 
 
-    // ScrollTrigger.create({
-    //   trigger: ".svg-section",
-    //   start: "top 100",
-    //   end: "bottom bottom",
-    //   scrub: 1,
-    //   onUpdate: (self) => {
-    //     milestones.forEach((milestone, i) => {
-    //       const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
-    //       if (!el) return;
-    //       if (self.progress >= milestone.progress + REVEAL_DELAY) {
-    //         gsap.to(el, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
-    //       } else {
-    //         gsap.to(el, { opacity: 0, scale: 0, duration: 0.2 });
-    //       }
-    //     });
-    //   },
-    // });
+    ScrollTrigger.create({
+      trigger: ".svg-section",
+      start: "top 100",
+      end: "bottom bottom",
+      scrub: 1,
+      onUpdate: (self) => {
+        milestones.forEach((milestone, i) => {
+          const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
+          if (!el) return;
+          if (self.progress >= milestone.progress + REVEAL_DELAY) {
+            gsap.to(el, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+          } else {
+            gsap.to(el, { opacity: 0, scale: 0, duration: 0.2 });
+          }
+        });
+      },
+    });
 
     const projectTexts = gsap.utils.toArray<HTMLElement>(".project-text");
     const totalCards = projects.length;
@@ -540,7 +540,7 @@ const Page = () => {
   return (
     <div className="home relative bg-white text-[#111111]">
 
-      {/* <header className="padding uppercase hidden md:flex text-lg lg:text-xl font-extralight fixed w-full justify-between py-6 z-50 mix-blend-difference">
+      <header className="padding uppercase hidden md:flex text-lg lg:text-xl font-extralight fixed w-full justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
         <div ref={navLinksRef} className="flex gap-8" >
           <Link href="/" className="text-white">[ HOME ]</Link>
@@ -550,7 +550,7 @@ const Page = () => {
           <Link href="/" className="text-white">[ CONTACT ]</Link>
         </div>
         <div />
-      </header> */}
+      </header>
 
       <div
         ref={menuRef}
@@ -754,13 +754,13 @@ const Page = () => {
           </div>
         </section>
 
-        {/* <section className="journey hidden md:block">
+        <section className="journey hidden md:block">
           <section className="my-journey pt-24 overflow-clip h-screen bg-white flex justify-center items-center">
             <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
           </section>
-        </section> */}
+        </section>
 
-        {/* <div className="h-auto svg-section bg-[#111111] overflow-hidden">
+        <div className="h-auto svg-section bg-[#111111] overflow-hidden">
           <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
             <div
               className="path-dot absolute w-12 h-12 bg-white rounded-full z-10 pointer-events-none"
@@ -808,7 +808,7 @@ const Page = () => {
               />
             </svg>
           </div>
-        </div> */}
+        </div>
 
       </section>
       
@@ -868,7 +868,7 @@ const Page = () => {
         </div>
       </div>
 
-      {/* <div className="h-screen w-full gallery-section overflow-hidden">
+      <div className="h-screen w-full gallery-section overflow-hidden">
         <div className="flex flex-col h-full items-center justify-center">
           <h1 className="text-[8rem]">MY GALLERY</h1>
           <h1 className="text-4xl max-w-lg text-center">Creative photo manipulations, digital arts and logo designing showcase</h1>
@@ -882,8 +882,8 @@ const Page = () => {
           <div className="absolute right-0 translate-y-[120rem] w-[22rem] h-[28rem] bg-red-500" />
           <div className="absolute left-64 translate-y-[130rem] w-[22rem] h-[28rem] bg-red-500" />
         </div>
-      </div> */}
-      {/* 
+      </div>
+      
       <footer>
         <div className="px-12 grid grid-cols-[1fr_1.5fr] gap-28 text-[8rem] w-full">
           <div className="leading-36">
@@ -967,7 +967,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-      </footer> */}
+      </footer>
 
     </div>
   );
