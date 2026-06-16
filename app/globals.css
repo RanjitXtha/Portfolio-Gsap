@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+    --breakpoint-3xl: 1920px;
+}
+
 .padding {
     @apply px-6
 }
-
-

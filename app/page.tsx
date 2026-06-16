@@ -8,20 +8,11 @@ import { ArrowUpRight, FolderCode, FolderGit, History } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-const ABOUT_TEXT = `I create digital experiences where code, 
-design, and imagination work together. From 
-developing full-stack applications to crafting 
-smooth animations, I enjoy building products 
-that feel alive.
-`;
+const ABOUT_TEXT = `I create digital experiences where code, design, and imagination work together. From developing full-stack applications to crafting smooth animations, I enjoy building products that feel alive.`;
 
-const ABOUT_PARA = `I'm a full-stack developer who enjoys turning ideas into interactive digital experiences.
-My work focuses on the MERN stack, Next.js, and modern web architectures,
-combining thoughtful UI, smooth animations, and powerful backend systems.
-I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify
-to create products that are both beautiful and practical. When I'm away from
-code, I explore graphic design and game development, constantly looking for
-new ways to mix creativity with technology.`;
+
+const ABOUT_PARA = `I'm a full-stack developer who enjoys turning ideas into interactive digital experiences. My work focuses on the MERN stack, Next.js, and modern web architectures, combining thoughtful UI, smooth animations, and powerful backend systems. I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify to create products that are both beautiful and practical. When I'm away from code, I explore graphic design and game development, constantly looking for new ways to mix creativity with technology.`;
+
 
 const menuItems = ["HOME", "ABOUT", "PROJECTS", "GALLERY", "CONTACT"];
 
@@ -52,18 +43,41 @@ const services = [
   },
 ];
 
-const circlePositions = [
+const circlePositionsDesktop = [
   "left-[8%] top-[15%]",
   "left-[18%] bottom-[40%]",
   "right-[10%] top-[20%]",
-  "right-[10%] bottom-[5%]",
+  "right-[10%] bottom-[12%]",
   "left-[14%] top-[35%]",
   "right-[20%] bottom-[36%]",
+  "left-[10%] bottom-[14%]",
+];
+
+const circlePositionsMobile = [
+  "left-[5%] top-[10%]",
+  "right-[8%] top-[18%]",
+  "left-[5%] top-[27%]",
+  "right-[5%] bottom-[30%]",
+  "left-[5%] bottom-[28%]",
+  "right-[10%] bottom-[0%]",
   "left-[10%] bottom-[0%]",
 ];
 
 type Skill = { label: string; image: string };
 type Card = { title: string; description: string; skills: Skill[] };
+
+function useCirclePositions() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  return isMobile ? circlePositionsMobile : circlePositionsDesktop;
+}
 
 const cards: Card[] = [
   {
@@ -123,18 +137,16 @@ const projects = [
 ];
 
 const stats = [
-  { icon: <FolderCode size={60} />, value: "10+", label: "Projects Completed" },
-  { icon: <History size={60} />, value: "1.5+", label: "Years of Experience" },
-  { icon: <FolderGit size={60} />, value: "7+", label: "Personal Projects" },
+  { icon: FolderCode, value: "10+", label: "Projects Completed" },
+  { icon: History, value: "1.5+", label: "Years of Experience" },
+  { icon: FolderGit, value: "7+", label: "Personal Projects" },
 ];
 
 function CardItem({ card, index }: { card: Card; index: number }) {
   const [activeImage, setActiveImage] = useState<string>(card.skills[0].image);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const handleEnter = (skill: Skill, j: number) => {
-    setHoveredIndex(j);
     if (imgRef.current) {
       gsap.to(imgRef.current, {
         opacity: 0, scale: 0.92, duration: 0.15, ease: "power2.in",
@@ -146,29 +158,24 @@ function CardItem({ card, index }: { card: Card; index: number }) {
     }
   };
 
-  const handleLeave = () => {
-    setHoveredIndex(null);
-  };
-
   return (
     <div
       className={`card-item card-${index} sticky top-0 h-screen w-full overflow-hidden`}
       style={{ zIndex: index + 1 }}
     >
-      <div className="card-inner w-full h-full grid grid-cols-2 origin-top bg-[#111111] text-white">
-        <div className="padding w-full h-full flex flex-col gap-12 px-16 py-12">
-          <h1 className="text-[10rem] leading-none mt-12 font-bold">{card.title}</h1>
+      <div className="card-inner w-full h-full grid grid-rows-2 md:grid-cols-2 origin-top bg-[#111111] text-white">
+        <div className="padding w-full h-full flex flex-col gap-4 md:gap-12 px-16 py-12">
+          <h1 className="text-[5rem] md:text-[7rem] xl:text-[10rem] leading-none font-bold">{card.title}</h1>
           <div style={{ fontFamily: "var(--font-inter)" }}>
-            <p className="text-xl text-white/60 max-w-lg">{card.description}</p>
+            <p className="text-base  lg:text-xl text-white/60  md:max-w-lg">{card.description}</p>
 
-            <div className="mt-10">
+            <div className="mt-4 md:mt-10">
               {card.skills.map((skill, j, arr) => (
                 <div
                   key={j}
                   onMouseEnter={() => handleEnter(skill, j)}
-                  onMouseLeave={handleLeave}
-                  className={`group flex items-center justify-between text-lg border-white/20 border-y
-                    hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default py-5
+                  className={`group flex items-center justify-between text-xs md:text-base xl:text-lg border-white/20 border-y
+                    hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default py-2 md:py-3 xl:py-5
                     ${j === 0 ? " border-t-0"
                       : j === arr.length - 1 && " border-b-0"
                     }`}
@@ -205,6 +212,7 @@ function CardItem({ card, index }: { card: Card; index: number }) {
 const Page = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const navLinksRef = useRef<HTMLDivElement>(null);
+  const circlePositions = useCirclePositions();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -263,14 +271,14 @@ const Page = () => {
         onEnterBack: () => gsap.to(menu, { opacity: 0, pointerEvents: "none", duration: 0.3 }),
       });
 
-      gsap.set('.hero-location',{
+      gsap.set('.hero-location', {
         yPercent: 100,
       });
 
-      gsap.to('.hero-location',{
+      gsap.to('.hero-location', {
         yPercent: 0,
-        duration:0.4,
-        delay:0.7,
+        duration: 0.4,
+        delay: 0.7,
         ease: "power3.out",
       });
 
@@ -304,20 +312,75 @@ const Page = () => {
         .to(".last-name", { x: -300 }, 0)
         .to(".about-image", { width: "100%", height: "100vh", rotate: 0, ease: "none" }, 0);
 
-      gsap.set(".about-title, .about-line", { yPercent: 110 });
-      gsap.to(".about-title", {
-        yPercent: 0, duration: 1, ease: "power4.out",
-        scrollTrigger: { trigger: ".about-section", start: "top 80%", toggleActions: "play none none reverse" },
-      });
-      gsap.to(".about-line", {
-        yPercent: 0, duration: 0.8, stagger: 0.08, ease: "power4.out",
-        scrollTrigger: { trigger: ".about-section", start: "top 60%", toggleActions: "play none none reverse" },
+      const groupWordsByLine = (selector: string) => {
+        const words = gsap.utils.toArray<HTMLElement>(selector);
+        const lines: HTMLElement[][] = [];
+        let currentLine: HTMLElement[] = [];
+        let currentY: number | null = null;
+
+        words.forEach((word) => {
+          const y = Math.round(word.parentElement!.getBoundingClientRect().top);
+          if (currentY === null || Math.abs(y - currentY) > 2) {
+            if (currentLine.length) lines.push(currentLine);
+            currentLine = [word];
+            currentY = y;
+          } else {
+            currentLine.push(word);
+          }
+        });
+        if (currentLine.length) lines.push(currentLine);
+        return lines;
+      };
+
+      // ABOUT_TEXT - line by line
+      gsap.set(".about-line", { yPercent: 110 });
+      ScrollTrigger.create({
+        trigger: ".about-section",
+        start: "top 60%",
+        toggleActions: "play none none reverse",
+        onEnter: () => {
+          const lines = groupWordsByLine(".about-line");
+          lines.forEach((lineWords, i) => {
+            gsap.to(lineWords, {
+              yPercent: 0,
+              duration: 0.8,
+              ease: "power4.out",
+              delay: i * 0.12,
+            });
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(".about-line", { yPercent: 110, duration: 0.4 });
+        },
       });
 
+      // ABOUT_PARA - line by line with offset delay
       gsap.set(".about-para-word", { yPercent: 110 });
-      gsap.to(".about-para-word", {
-        yPercent: 0, duration: 0.8, stagger: 0.1, ease: "power4.out", delay: 0.8,
-        scrollTrigger: { trigger: ".about-section", start: "top 50%", toggleActions: "play none none reverse" },
+      ScrollTrigger.create({
+        trigger: ".about-section",
+        start: "top 50%",
+        toggleActions: "play none none reverse",
+        onEnter: () => {
+          const lines = groupWordsByLine(".about-para-word");
+          lines.forEach((lineWords, i) => {
+            gsap.to(lineWords, {
+              yPercent: 0,
+              duration: 0.8,
+              ease: "power4.out",
+              delay: 0.8 + i * 0.1,
+            });
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(".about-para-word", { yPercent: 110, duration: 0.4 });
+        },
+      });
+
+      // Stats remain the same
+      gsap.set(".about-stat", { opacity: 0, y: 32 });
+      gsap.to(".about-stat", {
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out", delay: 1.8,
+        scrollTrigger: { trigger: ".about-section", start: "top 30%", toggleActions: "play none none reverse" },
       });
 
       gsap.set(".about-stat", { opacity: 0, y: 32 });
@@ -327,8 +390,12 @@ const Page = () => {
       });
 
       gsap.timeline({
-        scrollTrigger: { trigger: ".about-section", start: "top -50%", scrub: 1 },
-      }).fromTo(".skill-text", { fontSize: "14rem" }, { fontSize: "2rem" });
+        scrollTrigger: {
+          trigger: ".about-section",
+          start: () => window.innerWidth > 1280 ? "top+=50% top" : "top+=80% 40%",
+          scrub: 1, markers: true
+        },
+      }).to(".skill-text", { fontSize: "2rem" });
 
       gsap.utils.toArray<HTMLElement>(".card-inner").forEach((card, i, arr) => {
         if (i === arr.length - 1) return;
@@ -363,60 +430,60 @@ const Page = () => {
 
     });
 
-    const svgPath = document.querySelector(".svg-container path") as SVGPathElement;
-    const dot = document.querySelector(".path-dot") as HTMLElement;
-    const svgEl = document.querySelector(".svg-container svg") as SVGSVGElement;
-    const svgRect = svgEl.getBoundingClientRect();
-    const containerRect = document.querySelector(".svg-container")!.getBoundingClientRect();
-    const pathLength = svgPath.getTotalLength();
+    // const svgPath = document.querySelector(".svg-container path") as SVGPathElement;
+    // const dot = document.querySelector(".path-dot") as HTMLElement;
+    // const svgEl = document.querySelector(".svg-container svg") as SVGSVGElement;
+    // const svgRect = svgEl.getBoundingClientRect();
+    // const containerRect = document.querySelector(".svg-container")!.getBoundingClientRect();
+    // const pathLength = svgPath.getTotalLength();
 
-    if (svgPath && dot) {
-      gsap.set(svgPath, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
+    // if (svgPath && dot) {
+    //   gsap.set(svgPath, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
 
-      const scrollConfig = {
-        trigger: ".svg-section",
-        start: "top 150",
-        end: "bottom bottom",
-        scrub: 1,
-      };
+    //   const scrollConfig = {
+    //     trigger: ".svg-section",
+    //     start: "top 150",
+    //     end: "bottom bottom",
+    //     scrub: 1,
+    //   };
 
-      gsap.to(svgPath, { strokeDashoffset: 0, ease: "none", scrollTrigger: scrollConfig });
-      gsap.to(dot, {
-        ease: "none",
-        motionPath: { path: svgPath, align: svgPath, alignOrigin: [0.5, 0.5], autoRotate: false },
-        scrollTrigger: scrollConfig,
-      });
-    }
+    //   gsap.to(svgPath, { strokeDashoffset: 0, ease: "none", scrollTrigger: scrollConfig });
+    //   gsap.to(dot, {
+    //     ease: "none",
+    //     motionPath: { path: svgPath, align: svgPath, alignOrigin: [0.5, 0.5], autoRotate: false },
+    //     scrollTrigger: scrollConfig,
+    //   });
+    // }
 
-    milestones.forEach((milestone, i) => {
-      const point = svgPath.getPointAtLength(milestone.progress * pathLength);
-      const scaleX = svgRect.width / 782;
-      const scaleY = svgRect.height / 3297;
-      const x = svgRect.left - containerRect.left + point.x * scaleX;
-      const y = svgRect.top - containerRect.top + point.y * scaleY;
-      const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
-      if (el) { el.style.left = `${x}px`; el.style.top = `${y}px`; }
-    });
+    // milestones.forEach((milestone, i) => {
+    //   const point = svgPath.getPointAtLength(milestone.progress * pathLength);
+    //   const scaleX = svgRect.width / 782;
+    //   const scaleY = svgRect.height / 3297;
+    //   const x = svgRect.left - containerRect.left + point.x * scaleX;
+    //   const y = svgRect.top - containerRect.top + point.y * scaleY;
+    //   const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
+    //   if (el) { el.style.left = `${x}px`; el.style.top = `${y}px`; }
+    // });
 
 
 
-    ScrollTrigger.create({
-      trigger: ".svg-section",
-      start: "top 100",
-      end: "bottom bottom",
-      scrub: 1,
-      onUpdate: (self) => {
-        milestones.forEach((milestone, i) => {
-          const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
-          if (!el) return;
-          if (self.progress >= milestone.progress + REVEAL_DELAY) {
-            gsap.to(el, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
-          } else {
-            gsap.to(el, { opacity: 0, scale: 0, duration: 0.2 });
-          }
-        });
-      },
-    });
+    // ScrollTrigger.create({
+    //   trigger: ".svg-section",
+    //   start: "top 100",
+    //   end: "bottom bottom",
+    //   scrub: 1,
+    //   onUpdate: (self) => {
+    //     milestones.forEach((milestone, i) => {
+    //       const el = document.querySelector(`.milestone-${i}`) as HTMLElement;
+    //       if (!el) return;
+    //       if (self.progress >= milestone.progress + REVEAL_DELAY) {
+    //         gsap.to(el, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+    //       } else {
+    //         gsap.to(el, { opacity: 0, scale: 0, duration: 0.2 });
+    //       }
+    //     });
+    //   },
+    // });
 
     const projectTexts = gsap.utils.toArray<HTMLElement>(".project-text");
     const totalCards = projects.length;
@@ -473,7 +540,7 @@ const Page = () => {
   return (
     <div className="home relative bg-white text-[#111111]">
 
-      <header className="padding uppercase text-xl font-extralight fixed w-full flex justify-between py-6 z-50 mix-blend-difference">
+      {/* <header className="padding uppercase hidden md:flex text-lg lg:text-xl font-extralight fixed w-full justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
         <div ref={navLinksRef} className="flex gap-8" >
           <Link href="/" className="text-white">[ HOME ]</Link>
@@ -483,7 +550,7 @@ const Page = () => {
           <Link href="/" className="text-white">[ CONTACT ]</Link>
         </div>
         <div />
-      </header>
+      </header> */}
 
       <div
         ref={menuRef}
@@ -511,7 +578,7 @@ const Page = () => {
 
       <section className="main-body">
 
-        <div className="hero relative w-full h-screen text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
+        <div className="hero relative w-full h-screen text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
           <div className="about-image absolute top-[50vh] left-1/2 w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
             <video src="/videos/portfolio.mp4" autoPlay muted loop className="w-full h-full object-cover"></video>
           </div>
@@ -546,48 +613,52 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="about-section relative py-28 flex flex-col lg:flex-row items-center">
-          <div className="max-w-[70%] pl-16 flex flex-col gap-12">
+        <div className="px-10 lg:px-16 about-section overflow-x-hidden relative py-28 grid gap-y-12 grid-rows-none lg:grid-rows-1 lg:grid-cols-[2.2fr_1fr] 2xl:grid-cols-[2fr_1fr] w-full items-center">
 
-            <div className="text-6xl tracking-tight font-light" style={{ fontFamily: "var(--font-inter)" }}>
-              {ABOUT_TEXT.split("\n").map((line, i) => (
-                <div key={i} className="overflow-hidden py-1">
-                  <p className="about-line">{line}</p>
-                </div>
+          <div className="flex flex-col gap-12 row-start-2 lg:row-start-auto">
+
+            <div className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight font-light about-text-container" style={{ fontFamily: "var(--font-inter)" }}>
+              {ABOUT_TEXT.split(" ").map((word, i) => (
+                <span key={i} className="inline-block overflow-hidden mr-[0.25em] py-1">
+                  <span className="about-line inline-block">{word}</span>
+                </span>
               ))}
             </div>
 
-            <div className="text-xl font-normal max-w-6xl ml-0 lg:ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
-
+            <div className="text-sm  sm:text-base md:text-lg lg:text-xl order-2 lg:order-1 font-normal w-full max-w-3xl ml-0 lg:ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
               <p className="text-[#666666]">
-                {ABOUT_PARA.split("\n").map((line, i) => (
-                  <span key={i} className="overflow-hidden block">
-                    <span className="about-para-word inline-block">{line}</span>
+                {ABOUT_PARA.split(" ").map((word, i) => (
+                  <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
+                    <span className="about-para-word inline-block">{word}</span>
                   </span>
                 ))}
               </p>
 
-              <div className="flex justify-between gap-6 mt-6">
+              <div className="flex justify-between gap-6 mt-14">
                 {stats.map((stat, i) => (
                   <div key={i} className="about-stat">
-                    <span className="text-6xl flex items-center gap-4 font-light">
-                      {stat.icon}
+                    <span className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl flex items-center gap-4 font-light">
+                      <span className="[&>svg]:size-7 sm:[&>svg]:size-10 md:[&>svg]:size-14 2xl:[&>svg]:size-16">
+                        <stat.icon />
+                      </span>
                       <p>{stat.value}</p>
                     </span>
-                    <p className="mt-4 text-base">{stat.label}</p>
+                    <p className="mt-4 text-sm sm:text-base md:text-lg lg:text-xl">{stat.label}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="translate-x-24 -translate-y-48">
-            <img src="/image.jpg" alt="image" className="w-80 h-80 object-cover overflow-hidden rounded-full" />
+
+          <div className="row-start-1 lg:row-start-auto translate-y-0 lg:-translate-y-48 w-full flex justify-center">
+            <img src="/image.jpg" alt="image" className="w-64 lg:w-72 xl:w-80 aspect-square object-cover overflow-hidden rounded-full" />
           </div>
+
         </div>
 
-        <div className="h-screen w-full flex justify-center items-center">
-          <h1 className="text-center skill-text">SKILLS THAT I'VE BEEN <br /> WORKING ON</h1>
+        <div className="h-screen w-full flex justify-center items-center overflow-hidden">
+          <h1 className="text-center skill-text  text-[6rem] xl:text-[10rem] 2xl:text-[14rem] whitespace-nowrap">SKILLS THAT I'VE BEEN <br /> WORKING ON</h1>
         </div>
 
         <div className="cards-section">
@@ -596,7 +667,7 @@ const Page = () => {
           ))}
         </div>
 
-        <section className="h-screen services-section relative overflow-hidden">
+        <section className="h-auto md:h-screen services-section relative overflow-hidden">
           <h1 className="text-center text-5xl my-12">SERVICES</h1>
 
           {services.map((service, i) =>
@@ -605,19 +676,19 @@ const Page = () => {
                 key={`${i}-${j}`}
                 style={{ fontFamily: "var(--font-inter)", transitionProperty: "none" }}
                 className={`tech-circle tech-circle-${i} absolute ${circlePositions[j % circlePositions.length]}
-                  border rounded-full p-4 flex items-center justify-center text-center
-                  opacity-0 scale-0 pointer-events-none transition-none z-10`}
+          border rounded-full p-2 md:p-4 flex items-center justify-center text-center
+          text-xs md:text-base opacity-0 scale-0 pointer-events-none transition-none z-10`}
               >
                 {tech}
               </div>
             ))
           )}
 
-          <section className="services-list leading-29 text-[7rem] w-full flex flex-col gap-0 justify-center items-center">
+          <section className="services-list text-[2.2rem] md:text-[4rem] xl:text-[6rem] 2xl:text-[7rem] w-full flex flex-col gap-2 md:gap-4 justify-center items-center">
             {services.map((service, i) => (
               <div
                 key={i}
-                className="service-item w-full text-center cursor-default overflow-hidden"
+                className="service-item w-full text-center cursor-default overflow-hidden leading-[0.95]"
                 onMouseEnter={(e) => {
                   const item = e.currentTarget;
                   const letters = item.querySelectorAll(".svc-letter");
@@ -647,15 +718,20 @@ const Page = () => {
                   });
                 }}
               >
-                <div className="flex justify-center">
-                  {service.label.split("").map((char, index) => (
-                    <span key={index} className="relative overflow-hidden inline-block leading-[0.95]">
-                      <span className="svc-letter inline-block text-[#111111]/60">
-                        {char === " " ? "\u00A0" : char}
-                      </span>
-                      <div className="svc-letter-dup text-[#111111] absolute top-[100%] left-0 inline-block">
-                        {char === " " ? "\u00A0" : char}
-                      </div>
+                <div className="flex flex-wrap justify-center px-4">
+                  {service.label.split(" ").map((word, wIndex) => (
+                    <span key={wIndex} className="flex flex-wrap justify-center">
+                      {word.split("").map((char, index) => (
+                        <span key={index} className="relative overflow-hidden inline-block leading-[0.95]">
+                          <span className="svc-letter inline-block text-[#111111]/60">
+                            {char}
+                          </span>
+                          <div className="svc-letter-dup text-[#111111] absolute top-[100%] left-0 inline-block">
+                            {char}
+                          </div>
+                        </span>
+                      ))}
+                      <span className="inline-block w-[0.3em]">&nbsp;</span>
                     </span>
                   ))}
                 </div>
@@ -665,8 +741,8 @@ const Page = () => {
         </section>
 
         <section>
-          <div className="marquee-section overflow-hidden mt-58">
-            <div className="marquee-track-new flex gap-8 tracking-wider whitespace-nowrap text-8xl font-bold will-change-transform">
+          <div className="marquee-section overflow-hidden mt-30 md:mt-40 lg:mt-58">
+            <div className="marquee-track-new flex gap-8 tracking-wider whitespace-nowrap  text-4xl md:text-5xl  lg:text-7xl xl:text-8xl font-bold will-change-transform">
               {[...Array(2)].flatMap((_, copyIdx) =>
                 ["SOCKET.IO", "TWILIO", "STRAPI", "BULLMQ", "REDIS", "SENDGRID", "UNITY", "FIREBASE", "GIT"].map((item, j) => (
                   <span key={`${copyIdx}-${j}`} className="shrink-0 text-[#111111]">
@@ -678,13 +754,13 @@ const Page = () => {
           </div>
         </section>
 
-        <section className="journey">
+        {/* <section className="journey hidden md:block">
           <section className="my-journey pt-24 overflow-clip h-screen bg-white flex justify-center items-center">
             <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
           </section>
-        </section>
+        </section> */}
 
-        <div className="h-auto svg-section bg-[#111111] overflow-hidden">
+        {/* <div className="h-auto svg-section bg-[#111111] overflow-hidden">
           <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
             <div
               className="path-dot absolute w-12 h-12 bg-white rounded-full z-10 pointer-events-none"
@@ -732,30 +808,30 @@ const Page = () => {
               />
             </svg>
           </div>
-        </div>
+        </div> */}
 
       </section>
-
-      <div className="bg-[#111111] h-screen px-[4rem] py-[5rem] projects-section">
+      
+      <div className="bg-[#111111] h-screen px-4 lg:px-[2rem] xl:px-[4rem] py-[2rem] lg:py-[5rem] projects-section">
         <div className="overflow-x-hidden w-full h-[80%]">
-          <div className="projects flex w-full h-full gap-14">
+          <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
-              <div key={i} className="shrink-0 grid grid-cols-[2.3fr_1fr] gap-14 h-full w-full">
+              <div key={i} className="shrink-0 flex flex-col lg:grid  lg:grid-cols-[2.6fr_1fr] 2xl:grid-cols-[2.3fr_1fr] gap-6 xl:gap-10 2xl:gap-14 h-full w-full">
                 <div className={` w-full h-full`} >
                   <img src={project.image} alt={project.title} className="object-fill h-full w-full" />
                 </div>
                 <div className="flex flex-col justify-between project-text">
-                  <h1 className="text-6xl text-white">PROJECT {i + 1}</h1>
+                  <h1 className="text-4xl lg:text-6xl text-white">PROJECT {i + 1}</h1>
                   <div className="space-y-4">
-                    <h1 className="text-4xl text-white">{project.title}</h1>
+                    <h1 className="text-2xl lg:text-4xl text-white">{project.title}</h1>
                     <div>
                       {
                         project.tags.map((tag, j) => (
-                          <span key={j} className="tracking-widest underline underline-offset-8 text-white/50 mr-6" style={{ fontFamily: "var(--font-inter)" }}>{tag}</span>
+                          <span key={j} className="tracking-widest text-sm lg:text-base underline underline-offset-8 text-white/50 mr-6" style={{ fontFamily: "var(--font-inter)" }}>{tag}</span>
                         ))
                       }
                     </div>
-                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-lg text-white">{project.description}</p>
+                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-base lg:text-lg text-white">{project.description}</p>
 
                   </div>
                 </div>
@@ -774,25 +850,25 @@ const Page = () => {
           </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-2 h-screen overflow-hidden px-[3rem] py-12 blog-section">
+      
+      <div className="flex flex-col xl:grid grid-cols-2 h-screen overflow-hidden px-[3rem] py-12 blog-section">
         <div>
-          <h1 className="text-5xl">LATEST BLOGS</h1>
+          <h1 className="text-2xl md:text-5xl mb-10">LATEST BLOGS</h1>
         </div>
         <div className="flex flex-col justify-between blogs">
           {[1, 2, 3].map((_, i) => (
-            <div key={i} className="border-t-1 border-gray-500 flex gap-8 py-6">
-              <div className="bg-red-400 w-[22rem] h-[13rem]" />
+            <div key={i} className="border-t-1 border-gray-500 flex gap-4 lg:gap-8 py-6">
+              <div className="bg-red-400 w-[22rem] aspect-video" />
               <div className="text-2xl">
-                <h2>Blog Title sample here.</h2>
-                <p className="text-lg">Blog description to be showed in this section.</p>
+                <h2 className="text-sm lg:text-base">Blog Title sample here.</h2>
+                <p className="text-xs lg:text-lg">Blog description to be showed in this section.</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="h-screen w-full gallery-section overflow-hidden">
+      {/* <div className="h-screen w-full gallery-section overflow-hidden">
         <div className="flex flex-col h-full items-center justify-center">
           <h1 className="text-[8rem]">MY GALLERY</h1>
           <h1 className="text-4xl max-w-lg text-center">Creative photo manipulations, digital arts and logo designing showcase</h1>
@@ -806,8 +882,8 @@ const Page = () => {
           <div className="absolute right-0 translate-y-[120rem] w-[22rem] h-[28rem] bg-red-500" />
           <div className="absolute left-64 translate-y-[130rem] w-[22rem] h-[28rem] bg-red-500" />
         </div>
-      </div>
-
+      </div> */}
+      {/* 
       <footer>
         <div className="px-12 grid grid-cols-[1fr_1.5fr] gap-28 text-[8rem] w-full">
           <div className="leading-36">
@@ -891,7 +967,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
 
     </div>
   );
