@@ -2,7 +2,7 @@ name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: ["main"] # Replace with your default branch name if different
+    branches: ["main"] # ⚠️ Change this to "master" if your default branch is named master
 
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }} # 💡 Fixed the colon typo here
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
