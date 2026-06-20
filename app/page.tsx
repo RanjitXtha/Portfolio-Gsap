@@ -14,7 +14,7 @@ const ABOUT_TEXT = `I create digital experiences where code, design, and imagina
 const ABOUT_PARA = `I'm a full-stack developer who enjoys turning ideas into interactive digital experiences. My work focuses on the MERN stack, Next.js, and modern web architectures, combining thoughtful UI, smooth animations, and powerful backend systems. I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify to create products that are both beautiful and practical. When I'm away from code, I explore graphic design and game development, constantly looking for new ways to mix creativity with technology.`;
 
 
-const menuItems = ["HOME", "ABOUT", "PROJECTS", "GALLERY", "CONTACT"];
+const menuItems = ["HOME", "ABOUT", "SKILLS", "MY JOURNEY", "SERVICES", "PROJECTS", "CONTACT"];
 
 const services = [
   {
@@ -108,9 +108,9 @@ const cards: Card[] = [
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
     skills: [
-      { label: "FIGMA", image: "/images/skills/figma.webp" },
-      { label: "ADOBE PHOTOSHOP", image: "/images/skills/photoshop.webp" },
-      { label: "ADOBE ILLUSTRATOR", image: "/images/skills/illustrator.webp" },
+      { label: "FIGMA", image: "/images/skills/figma.png" },
+      { label: "ADOBE PHOTOSHOP", image: "/images/skills/photoshop.png" },
+      { label: "ADOBE ILLUSTRATOR", image: "/images/skills/illustrator.png" },
     ],
   },
 ];
@@ -128,7 +128,7 @@ const milestones = [
 const REVEAL_DELAY = 0.03;
 
 const projects = [
-  { title: "TriMandu", description: "A Tourist Destination Planner utlizing A*, Held Karp, Cosine Similarity and OSM data to provide shorest optimize routes and round trips, allowing discoering of popular destinations in kathmandu.", tags: ["NODE", "REACT", "OSM", "POSTGRESQL"], image: "/images/projects/tripmandu.png" },
+  { title: "TripMandu", description: "A Tourist Destination Planner utlizing A*, Held Karp, Cosine Similarity and OSM data to provide shorest optimize routes and round trips, allowing discoering of popular destinations in kathmandu.", tags: ["NODE", "REACT", "OSM", "POSTGRESQL"], image: "/images/projects/tripmandu.png" },
   { title: "Portfolio Website", description: "A portfolio website created using Next and GSAP for modern and elegant design.", tags: ["NEXTJS", "GSAP"], image: "/images/projects/portfolio.png" },
   { title: "E-Commerce Website", description: "An e-commerce website built with MERN, utilizing cloudinary and esewa payment integration.", tags: ["MERN", "CLOUDINARY", "ESEWA"], image: "/images/projects/ecommerce.png" },
   { title: "Nepflix", description: "A movie website utilizing data from TMDB", tags: ["REACT", "TMDB", "CLOUDINARY  "], image: "/images/projects/nepflix.png" },
@@ -142,6 +142,15 @@ const stats = [
   { icon: FolderGit, value: "7+", label: "Personal Projects" },
 ];
 
+const gallery = [
+  { image: "/images/gallery/1.png", position: "left-24 w-[22rem] h-[28rem]" },
+  { image: "/images/gallery/2.jpg", position: "right-24 top-52 w-[22rem] h-[28rem]" },
+  { image: "/images/gallery/3.jpg", position: "translate-x-[1rem] translate-y-[80rem] w-[22rem] h-[28rem]" },
+  { image: "/images/gallery/4.jpg", position: "translate-y-[50rem] right-1/2 translate-x-1/2 w-[22rem] h-[28rem]" },
+  { image: "/images/gallery/5.jpg", position: "right-0 translate-y-[88rem] w-[22rem] h-[15rem]" },
+  { image: "/images/gallery/6.jpg", position: "right-0 translate-y-[120rem] w-[22rem] h-[28rem]" },
+  { image: "/images/gallery/7.jpg", position: "left-64 translate-y-[130rem] w-[22rem] h-[28rem]" },
+];
 function CardItem({ card, index }: { card: Card; index: number }) {
   const [activeImage, setActiveImage] = useState<string>(card.skills[0].image);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -163,7 +172,7 @@ function CardItem({ card, index }: { card: Card; index: number }) {
       className={`card-item card-${index} sticky top-0 h-screen w-full overflow-hidden`}
       style={{ zIndex: index + 1 }}
     >
-      <div className="card-inner w-full h-full grid grid-rows-2 md:grid-cols-2 origin-top bg-[#111111] text-white">
+      <div className="card-inner w-full h-full flex flex-col md:grid grid-cols-2  bg-[#111111] text-white">
         <div className="padding w-full h-full flex flex-col gap-4 md:gap-12 px-16 py-12">
           <h1 className="text-[5rem] md:text-[7rem] xl:text-[10rem] leading-none font-bold">{card.title}</h1>
           <div style={{ fontFamily: "var(--font-inter)" }}>
@@ -191,17 +200,12 @@ function CardItem({ card, index }: { card: Card; index: number }) {
           </div>
         </div>
 
-        <div className="card-right relative flex items-center justify-center w-full h-full overflow-hidden">
-          <span
-            className="absolute top-8 left-8 text-xs tracking-widest text-white/30 transition-all duration-300"
-            style={{ fontFamily: "var(--font-inter)" }}
-          >
-          </span>
+        <div className="card-right flex items-center justify-center w-full h-full overflow-hidden">
           <img
             ref={imgRef}
             src={activeImage}
             alt={card.title}
-            className="w-[80%] h-full object-contain"
+            className="w-full h-full object-contain"
           />
         </div>
       </div>
@@ -485,21 +489,29 @@ const Page = () => {
       },
     });
 
+    const projectsEl = document.querySelector(".projects") as HTMLElement;
+    const wrapperEl = projectsEl.parentElement as HTMLElement; // .overflow-x-hidden
     const projectTexts = gsap.utils.toArray<HTMLElement>(".project-text");
-    const totalCards = projects.length;
-    const scrollDistance = (totalCards - 1) * 100;
+
+    const getScrollDistance = () => projectsEl.scrollWidth - wrapperEl.clientWidth;
 
     const projectsTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".projects-section",
         start: "top top",
-        end: () => `+=${totalCards * window.innerWidth}`,
+        end: () => `+=${getScrollDistance()}`,
         scrub: 1,
         pin: true,
         anticipatePin: 1,
+        invalidateOnRefresh: true, // recalc functions below on resize/refresh
         onUpdate: (self) => {
           const pct = self.progress * 100;
-          gsap.to(".progress-line", { width: `${pct}%`, height: `${2 + self.progress * 3}px`, marginTop: `-${self.progress * 1.5}px`, duration: 0 });
+          gsap.to(".progress-line", {
+            width: `${pct}%`,
+            height: `${2 + self.progress * 3}px`,
+            marginTop: `-${self.progress * 1.5}px`,
+            duration: 0,
+          });
           gsap.to(".progress-dot", { left: `${pct}%`, duration: 0 });
           const currentCard = Math.min(Math.ceil(self.progress * projects.length) || 1, projects.length);
           const counterEl = document.querySelector(".progress-counter");
@@ -508,7 +520,12 @@ const Page = () => {
       },
     });
 
-    projectsTl.to(".projects", { xPercent: -scrollDistance, ease: "none" });
+
+    projectsTl.to(".projects", {
+      x: () => -getScrollDistance(),
+      ease: "none",
+    });
+
 
     projectTexts.forEach((text) => {
       gsap.fromTo(text, { x: 300 }, {
@@ -543,11 +560,13 @@ const Page = () => {
       <header className="padding uppercase hidden md:flex text-lg lg:text-xl font-extralight fixed w-full justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
         <div ref={navLinksRef} className="flex gap-8" >
-          <Link href="/" className="text-white">[ HOME ]</Link>
-          <Link href="/" className="text-white">[ ABOUT ]</Link>
-          <Link href="/" className="text-white">[ PROJECTS ]</Link>
-          <Link href="/" className="text-white">[ GALLERY ]</Link>
-          <Link href="/" className="text-white">[ CONTACT ]</Link>
+          {
+            menuItems.map((item, i) => (
+              <Link key={i} href={`#${item.toLowerCase().replace(/\s/g, "-")}`} className="text-white">
+                {`[ ${item} ]`}
+              </Link>
+            ))
+          }
         </div>
         <div />
       </header>
@@ -563,14 +582,14 @@ const Page = () => {
         <div className="flex flex-col justify-center px-8">
           <ul className="space-y-0 flex flex-col">
             {menuItems.map((item, i) => (
-              <li key={i} className="flex w-full h-full menu-item cursor-pointer overflow-hidden">
+              <Link href={`#${item.toLowerCase().replace(/\s/g, "-")}`} key={i} className="flex w-full h-full menu-item cursor-pointer overflow-hidden">
                 {item.split("").map((e, index) => (
                   <span key={index} className="text-white text-[8vw] font-bold leading-[0.95] relative overflow-hidden">
                     <span className="inline-block">{e}</span>
                     <div className="text-gray-300 absolute top-[100%] left-0 inline-block">{e}</div>
                   </span>
                 ))}
-              </li>
+              </Link>
             ))}
           </ul>
         </div>
@@ -578,7 +597,7 @@ const Page = () => {
 
       <section className="main-body">
 
-        <div className="hero relative w-full h-screen text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
+        <div id="home" className="hero relative w-full h-screen text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
           <div className="about-image absolute top-[50vh] left-1/2 w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
             <video src="/videos/portfolio.mp4" autoPlay muted loop className="w-full h-full object-cover"></video>
           </div>
@@ -609,11 +628,17 @@ const Page = () => {
                 </span>
               ))}
             </h1>
-            {/* <span className="absolute text-sm tracking-[6px] left-[14%] underline underline-offset-8  -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span> */}
+            <div className=" hidden lg:block absolute tracking-[4px]  2xl:tracking-[6px] text-sm  left-[10%]  xl:left-[12%] 2xl:left-[18%] flex flex-col gap-4 -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>
+              <a>[ GITHUB ]</a>
+              <a>[ LINKEDIN ]</a>
+              <a>[ EMAIL ]</a>
+              <a>[ INSTAGRAM ]</a>
+            </div>
+            {/* <span >{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span> */}
           </div>
         </div>
 
-        <div className="px-10 lg:px-16 about-section overflow-x-hidden relative py-28 grid gap-y-12 grid-rows-none lg:grid-rows-1 lg:grid-cols-[2.2fr_1fr] 2xl:grid-cols-[2fr_1fr] w-full items-center">
+        <div id="about" className="px-10 lg:px-16 about-section overflow-x-hidden relative py-28 grid gap-y-12 grid-rows-none lg:grid-rows-1 lg:grid-cols-[2.2fr_1fr] 2xl:grid-cols-[2fr_1fr] w-full items-center">
 
           <div className="flex flex-col gap-12 row-start-2 lg:row-start-auto">
 
@@ -661,13 +686,13 @@ const Page = () => {
           <h1 className="text-center skill-text  text-[6rem] xl:text-[10rem] 2xl:text-[14rem] whitespace-nowrap">SKILLS THAT I'VE BEEN <br /> WORKING ON</h1>
         </div>
 
-        <div className="cards-section">
+        <div id="skills" className="cards-section">
           {cards.map((card, i) => (
             <CardItem key={i} card={card} index={i} />
           ))}
         </div>
 
-        <section className="h-auto md:h-screen services-section relative overflow-hidden">
+        <section id="services" className="h-auto md:h-screen services-section relative overflow-hidden">
           <h1 className="text-center text-5xl my-12">SERVICES</h1>
 
           {services.map((service, i) =>
@@ -754,13 +779,13 @@ const Page = () => {
           </div>
         </section>
 
-        <section className="journey hidden md:block">
+        <section id="my-journey" className="journey hidden md:block">
           <section className="my-journey pt-24 overflow-clip h-screen bg-white flex justify-center items-center">
             <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
           </section>
         </section>
 
-        <div className="h-auto svg-section bg-[#111111] overflow-hidden">
+        <div className=" svg-section bg-[#111111] overflow-hidden">
           <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
             <div
               className="path-dot absolute w-12 h-12 bg-white rounded-full z-10 pointer-events-none"
@@ -811,8 +836,8 @@ const Page = () => {
         </div>
 
       </section>
-      
-      <div className="bg-[#111111] h-screen px-4 lg:px-[2rem] xl:px-[4rem] py-[2rem] lg:py-[5rem] projects-section">
+
+      <div id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:px-[4rem] py-[2rem] lg:py-[5rem] projects-section">
         <div className="overflow-x-hidden w-full h-[80%]">
           <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
@@ -850,8 +875,8 @@ const Page = () => {
           </div>
         </div>
       </div>
-      
-      <div className="flex flex-col xl:grid grid-cols-2 h-screen overflow-hidden px-[3rem] py-12 blog-section">
+
+      {/* <div id="blogs" className="flex flex-col xl:grid grid-cols-2 h-screen overflow-hidden px-[3rem] py-12 blog-section">
         <div>
           <h1 className="text-2xl md:text-5xl mb-10">LATEST BLOGS</h1>
         </div>
@@ -866,30 +891,32 @@ const Page = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      <div className="h-screen w-full gallery-section overflow-hidden">
+      <div id="gallery" className="h-screen w-full gallery-section overflow-hidden">
         <div className="flex flex-col h-full items-center justify-center">
-          <h1 className="text-[8rem]">MY GALLERY</h1>
-          <h1 className="text-4xl max-w-lg text-center">Creative photo manipulations, digital arts and logo designing showcase</h1>
+          <h1 className="text-[3rem] lg:text-[6rem] 2xl:text-[8rem]">MY GALLERY</h1>
+          <h1 style={{ fontFamily: 'var(--font-inter)' }} className="text-xl lg:text-3xl xl:text-4xl max-w-lg text-center">Creative photo manipulations, digital arts and logo designing showcase</h1>
         </div>
         <div className="relative max-w-[75%] mx-auto gallery">
-          <div className="absolute left-24 w-[22rem] h-[28rem] bg-red-500" />
-          <div className="absolute right-24 top-52 w-[22rem] h-[28rem] bg-red-500" />
-          <div className="absolute translate-x-[1rem] translate-y-[80rem] w-[22rem] h-[28rem] bg-red-500" />
-          <div className="absolute translate-y-[50rem] right-1/2 translate-x-1/2 w-[22rem] h-[28rem] bg-red-500" />
-          <div className="absolute right-0 translate-y-[88rem] w-[22rem] h-[15rem] bg-red-500" />
-          <div className="absolute right-0 translate-y-[120rem] w-[22rem] h-[28rem] bg-red-500" />
-          <div className="absolute left-64 translate-y-[130rem] w-[22rem] h-[28rem] bg-red-500" />
+          {gallery.map((item, i) => (
+            <div key={i} className={`absolute overflow-hidden ${item.position}`}>
+              <img
+                src={item.image}
+                alt={`Gallery item ${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
-      
-      <footer>
-        <div className="px-12 grid grid-cols-[1fr_1.5fr] gap-28 text-[8rem] w-full">
-          <div className="leading-36">
+
+      <footer id="contact">
+        <div className="px-12 flex flex-col lg:grid grid-cols-2 xl:grid-cols-[1fr_1.5fr] gap-8 lg:gap-18 xl:gap-28 text-[5rem] 2xl:text-[6rem] 3xl:text-[8rem] w-full">
+          <div className="leading-24 xl:leading-36">
             <h1>LET'S WORK</h1>
             <div className="flex gap-2 items-center">
-              <video src="/images/emoji.mp4" autoPlay loop muted playsInline className="w-44 object-contain" />
+              <video src="/images/emoji.mp4" autoPlay loop muted playsInline className="w-28  xl:w-34 2xl:w-44 object-contain" />
               <p>TOGETHER</p>
             </div>
             <p className="text-base mt-8 max-w-lg" style={{ fontFamily: "var(--font-inter)" }}>
@@ -897,50 +924,51 @@ const Page = () => {
             </p>
           </div>
 
-          <div style={{ fontFamily: "var(--font-inter)" }} className="grid grid-cols-2 gap-x-6 gap-y-14 text-sm text-gray-600">
+          <div style={{ fontFamily: "var(--font-inter)" }} className="grid grid-cols-2 gap-x-6 3xl:gap-y-14 text-sm text-gray-600">
             <div className="flex flex-col">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="First Name" />
+              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="First Name" />
             </div>
             <div className="flex flex-col">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="Last Name" />
+              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="Last Name" />
             </div>
             <div className="flex flex-col col-span-2">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="email" placeholder="Email Address" />
+              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="email" placeholder="Email Address" />
             </div>
             <div className="col-span-2 flex flex-col">
-              <textarea className="w-full border-b border-gray-400 focus:outline-0 text-4xl text-black placeholder:text-[#111111] py-3 resize-none bg-transparent" placeholder="Write your message here..." rows={1} />
+              <textarea className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 resize-none bg-transparent" placeholder="Write your message here..." rows={1} />
             </div>
-            <button className="text-lg bg-[#111111] justify-self-start px-6 py-3 text-white">Send Message</button>
+            <button className="text-base xl:text-lg bg-[#111111] justify-self-start px-6 max-h-14 py-3 mt-8 lg:mt-0 text-white">Send Message</button>
           </div>
         </div>
 
         <div className="bg-[#111111] text-white py-16 w-full px-12 mt-24">
-          <div className="flex justify-between">
-            <h1 className="text-[20vw] tracking-tight leading-90">RANJIT
+          <div className="flex flex-col sm:flex-row items-center justify-between ">
+            <h1 className="text-[20vw] tracking-tight leading-34 sm:leading-90">RANJIT
             </h1>
-            <h1 className="text-[20vw] tracking-tight leading-90">XTHA</h1>
+            <h1 className="text-[20vw] tracking-tight leading-34 sm:leading-90">XTHA</h1>
           </div>
 
-          <div style={{ fontFamily: "var(--font-inter)" }} className="font-light flex mt-12 justify-between px-3">
+          <div style={{ fontFamily: "var(--font-inter)" }} className="text-sm lg:text-base font-light flex flex-col md:flex-row mt-12 justify-between px-3 gap-12">
             <div className="flex flex-col gap-4 w-full max-w-[36rem]">
-              {["HOME", "ABOUT", "SKILLS", "MY JOURNEY", "PROJECTS", "CONTACT"].map((label, i, arr) => (
-                <div
+              {menuItems.map((label, i, arr) => (
+                <Link
+                  href={`#${label.toLowerCase().replace(/\s/g, "-")}`}
                   key={i}
                   className={`hover:bg-white group hover:text-[#111111] transition-all py-4 flex items-center gap-4
                     ${i < arr.length - 1 ? "border-b-[1px] border-white/50" : ""}`}
                 >
                   <p className="group-hover:translate-x-4 transition">{label}</p>
                   <ArrowUpRight className="group-hover:translate-x-4 transition group-hover:rotate-45" />
-                </div>
+                </Link>
               ))}
             </div>
 
-            <div className="flex flex-col w-[32rem] text-xl items-end justify-between">
+            <div className="flex flex-col text-xl items-start md:items-end justify-between">
               <div className="max-w-lg">
-                <p className="text-2xl font-normal">Thanks for visiting. Ready to start a conversation?</p>
-                <p className="text-sm mt-2">Reach out via email or connect with me on LinkedIn and GitHub. I'll get back to you as soon as possible.</p>
+                <p className="text-base lg:text-2xl font-normal">Thanks for visiting. Ready to start a conversation?</p>
+                <p className="text-xs lg:text-sm mt-2">Reach out via email or connect with me on LinkedIn and GitHub. I'll get back to you as soon as possible.</p>
               </div>
-              <div className="w-full ">
+              <div className="w-full text-sm lg:text-base mt-6">
                 <p>Lalitpur, Nepal</p>
                 <div className="flex gap-6 items-end">
                   <p>shrestha.ranjit.np@gmail.com</p>
