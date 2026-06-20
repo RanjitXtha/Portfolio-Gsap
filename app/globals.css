@@ -9,9 +9,7 @@
     @apply px-6
 }
 
-html {
-    scroll-behavior: smooth;
-}
+
 
 @layer base {
   html {
