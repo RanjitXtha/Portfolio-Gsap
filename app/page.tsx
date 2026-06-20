@@ -178,13 +178,13 @@ function CardItem({ card, index }: { card: Card; index: number }) {
           <div style={{ fontFamily: "var(--font-inter)" }}>
             <p className="text-base  lg:text-xl text-white/60  md:max-w-lg">{card.description}</p>
 
-            <div className="mt-4 md:mt-10">
+            <div className="mt-4 md:mt-6 2xl:mt-10">
               {card.skills.map((skill, j, arr) => (
                 <div
                   key={j}
                   onMouseEnter={() => handleEnter(skill, j)}
                   className={`group flex items-center justify-between text-xs md:text-base xl:text-lg border-white/20 border-y
-                    hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default py-2 md:py-3 xl:py-5
+                    hover:bg-white hover:text-[#111111] transition-all px-2 cursor-default py-2 md:py-4 2xl:py-5
                     ${j === 0 ? " border-t-0"
                       : j === arr.length - 1 && " border-b-0"
                     }`}
@@ -628,7 +628,7 @@ const Page = () => {
                 </span>
               ))}
             </h1>
-            <div className=" hidden lg:block absolute tracking-[4px]  2xl:tracking-[6px] text-sm  left-[10%]  xl:left-[12%] 2xl:left-[18%] flex flex-col gap-4 -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>
+            <div className=" hidden lg:flex absolute tracking-[4px]  2xl:tracking-[6px] text-sm  left-[10%]  xl:left-[12%] 2xl:left-[18%] flex-col gap-4 -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>
               <a>[ GITHUB ]</a>
               <a>[ LINKEDIN ]</a>
               <a>[ EMAIL ]</a>
@@ -709,7 +709,7 @@ const Page = () => {
             ))
           )}
 
-          <section className="services-list text-[2.2rem] md:text-[4rem] xl:text-[6rem] 2xl:text-[7rem] w-full flex flex-col gap-2 md:gap-4 justify-center items-center">
+          <section className="services-list text-[2.2rem] md:text-[4rem] xl:text-[5rem] 2xl:text-[7rem] w-full flex flex-col gap-2 md:gap-4 justify-center items-center">
             {services.map((service, i) => (
               <div
                 key={i}
@@ -767,7 +767,7 @@ const Page = () => {
 
         <section>
           <div className="marquee-section overflow-hidden mt-30 md:mt-40 lg:mt-58">
-            <div className="marquee-track-new flex gap-8 tracking-wider whitespace-nowrap  text-4xl md:text-5xl  lg:text-7xl xl:text-8xl font-bold will-change-transform">
+            <div className="marquee-track-new flex gap-8 tracking-wider whitespace-nowrap  text-4xl md:text-5xl  lg:text-6xl 2xl:text-8xl font-bold will-change-transform">
               {[...Array(2)].flatMap((_, copyIdx) =>
                 ["SOCKET.IO", "TWILIO", "STRAPI", "BULLMQ", "REDIS", "SENDGRID", "UNITY", "FIREBASE", "GIT"].map((item, j) => (
                   <span key={`${copyIdx}-${j}`} className="shrink-0 text-[#111111]">
@@ -786,23 +786,23 @@ const Page = () => {
         </section>
 
         <div className=" svg-section bg-[#111111] overflow-hidden">
-          <div className="svg-container flex justify-center items-center -translate-x-[36%] relative">
+          <div className=" svg-container flex justify-center items-center -translate-x-[34%] xl:-translate-x-[36%] relative">
             <div
-              className="path-dot absolute w-12 h-12 bg-white rounded-full z-10 pointer-events-none"
+              className=" path-dot absolute w-10 2xl:w-12 aspect-square bg-white rounded-full z-10 pointer-events-none"
               style={{ transform: "translate(-50%, -50%)" }}
             />
 
             {milestones.map((m, i) => (
               <div
                 key={i}
-                className={`milestone-${i} absolute z-20 opacity-0 scale-0 pointer-events-none w-full`}
+                className={`milestone-${i}  absolute z-20 opacity-0 scale-0 pointer-events-none w-full`}
                 style={{ transform: "translate(-50%, -50%)" }}
               >
-                <div className="w-20 h-20 rounded-full translate-[-50%] bg-white" />
+                <div className="w-14 2xl:w-20 aspect-square rounded-full translate-[-50%] bg-white" />
                 <div className="absolute top-0 ">
-                  <p className={`text-white font-bold text-3xl leading-none ${m.alignment}`}>{m.year}</p>
-                  <div className="text-gray-400 text-xl translate-x-[8rem] -translate-y-10 relative flex w-full gap-24">
-                    <p className="max-w-[30rem]">{m.text}</p>
+                  <p className={`text-white font-bold  text-base lg:text-lg 2xl:text-3xl leading-none ${m.alignment}`}>{m.year}</p>
+                  <div className="text-gray-400 text-sm xl:text-base 2xl:text-xl translate-x-[4rem] 2xl:translate-x-[8rem] -translate-y-10 relative flex w-full gap-12 2xl:gap-20">
+                    <p className="max-w-[18rem] xl:max-w-[20rem] 2xl:max-w-[30rem]">{m.text}</p>
 
                     {m.image.endsWith(".mp4") || m.image.endsWith(".webm") ? (
                       <video
@@ -811,13 +811,13 @@ const Page = () => {
                         muted
                         loop
                         playsInline
-                        className="w-[38rem] h-[24rem] object-contain top-1/2 -translate-y-1/2"
+                        className="w-[20rem] lg:w-[26rem] 2xl:w-[38rem] aspect-video  object-contain top-1/2 -translate-y-1/2"
                       />
                     ) : (
                       <img
                         src={m.image}
                         alt={m.year}
-                        className="max-w-[38rem] max-h-[24rem] object-contain top-1/2 -translate-y-1/2"
+                        className="w-[20rem] lg:w-[26rem] 2xl:w-[38rem] aspect-video object-contain top-1/2 -translate-y-1/2"
                       />
                     )}
                   </div>
@@ -825,7 +825,13 @@ const Page = () => {
               </div>
             ))}
 
-            <svg width="782" height="3297" viewBox="0 0 782 3297" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+  className="w-[391px] md:w-[500px] 2xl:w-[782px]"
+  style={{ height: "auto" }}
+  viewBox="0 0 782 3297"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
               <path
                 d="M99.5 6.74631C297.833 103.08 650.647 419.828 587.5 612.246C534.5 773.746 268 781.746 223 904.746C151.34 1100.62 656 1066.25 694 1203.25C751.705 1411.29 223 1330.25 223 1534.75C223 1778.25 759.246 1676.2 773.5 1893.25C784.5 2060.75 264 2110.25 245.5 2173.75C220.183 2260.65 737.422 2219.9 728.5 2376.25C718 2560.25 79 2401.36 593 2552.75C701.5 2584.7 194.5 2515.25 550.5 2603.25C773.5 2640.25 263 2654.75 524.5 2666.25C786 2677.75 520.579 2652.23 428 2746.75C237 2941.75 386.5 3289.25 0 3289.25"
                 stroke="#FFFEFE"
@@ -837,8 +843,8 @@ const Page = () => {
 
       </section>
 
-      <div id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:px-[4rem] py-[2rem] lg:py-[5rem] projects-section">
-        <div className="overflow-x-hidden w-full h-[80%]">
+      <div id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:py-[3rem] 2xl:px-[5rem]  projects-section">
+        <div className="overflow-x-hidden w-full h-[80%] md:h-[85%]">
           <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
               <div key={i} className="shrink-0 flex flex-col lg:grid  lg:grid-cols-[2.6fr_1fr] 2xl:grid-cols-[2.3fr_1fr] gap-6 xl:gap-10 2xl:gap-14 h-full w-full">
@@ -846,17 +852,17 @@ const Page = () => {
                   <img src={project.image} alt={project.title} className="object-fill h-full w-full" />
                 </div>
                 <div className="flex flex-col justify-between project-text">
-                  <h1 className="text-4xl lg:text-6xl text-white">PROJECT {i + 1}</h1>
+                  <h1 className="tracking-widest text-xl md:text-4xl 2xl:text-6xl text-white">PROJECT {i + 1}</h1>
                   <div className="space-y-4">
-                    <h1 className="text-2xl lg:text-4xl text-white">{project.title}</h1>
+                    <h1 className="tracking-widest text-xl md:text-2xl 2xl:text-4xl text-white">{project.title}</h1>
                     <div>
                       {
                         project.tags.map((tag, j) => (
-                          <span key={j} className="tracking-widest text-sm lg:text-base underline underline-offset-8 text-white/50 mr-6" style={{ fontFamily: "var(--font-inter)" }}>{tag}</span>
+                          <span key={j} className="tracking-widest text-xs  2xl:text-base underline underline-offset-8 text-white/50 mr-6" style={{ fontFamily: "var(--font-inter)" }}>{tag}</span>
                         ))
                       }
                     </div>
-                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-base lg:text-lg text-white">{project.description}</p>
+                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-sm xl:text-base 2xl:text-lg text-white">{project.description}</p>
 
                   </div>
                 </div>
