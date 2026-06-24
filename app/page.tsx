@@ -14,7 +14,7 @@ const ABOUT_TEXT = `I create digital experiences where code, design, and imagina
 const ABOUT_PARA = `I'm a full-stack developer who enjoys turning ideas into interactive digital experiences. My work focuses on the MERN stack, Next.js, and modern web architectures, combining thoughtful UI, smooth animations, and powerful backend systems. I build with technologies like React, Node.js, MongoDB, Strapi, and Shopify to create products that are both beautiful and practical. When I'm away from code, I explore graphic design and game development, constantly looking for new ways to mix creativity with technology.`;
 
 
-const menuItems = ["HOME", "ABOUT", "SKILLS", "MY JOURNEY", "SERVICES", "PROJECTS", "CONTACT"];
+const menuItems = ["HOME", "ABOUT", "SKILLS", "MY JOURNEY", "PROJECTS", "CONTACT"];
 
 const services = [
   {
@@ -98,7 +98,7 @@ const cards: Card[] = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, possimus consequatur tempore ut quas eius dignissimos adipisci eaque nulla deserunt",
     skills: [
       { label: "NODE & EXPRESS", image: "/images/skills/node.png" },
-      { label: "DATABASE - MONGODB ", image: "/images/skills/mongodb.png" },
+      { label: "DATABASE - MONGODB", image: "/images/skills/mongodb.png" },
       { label: "DATABASE - POSTGRESQL (PRISMA)", image: "/images/skills/prisma.png" },
       { label: "STRAPI", image: "/images/skills/strapi.png" },
     ],
@@ -119,9 +119,9 @@ const milestones = [
   { progress: 0.1, year: "2017", text: "Completed SEE from Pawan Prakriti School", alignment: "-translate-x-[8rem]", image: "/images/journey/pawan.jpeg" },
   { progress: 0.15, year: "2019", text: "Graduated +2 From MileStone Int'l College", alignment: "-translate-y-6 -translate-x-[8rem]", image: "/images/journey/milestone.jpg" },
   { progress: 0.27, year: "2021", text: "Joined Bachelors Bsc.CSIT at Bhaktapur Multiple Campus", alignment: "-translate-x-[8rem]", image: "/images/journey/bmc.jpeg" },
-  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing...", alignment: "translate-y-18 -translate-x-16", image: "/videos/portfolio.mp4" },
+  { progress: 0.38, year: "2022", text: "Exploring Web Development, Game Development and Graphics Designing...", alignment: "translate-y-18 -translate-x-8 2xl:-translate-x-16", image: "/videos/portfolio.mp4" },
   { progress: 0.48, year: "2024", text: "Started MERN internship at Palmmind Technology", alignment: "-translate-x-[8rem]", image: "/images/journey/palmmind-logo.webp" },
-  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-[7rem]", image: "/images/journey/palmmind-logo.webp" },
+  { progress: 0.57, year: "2024", text: "Completed Internship. Started Full-time Role at Palmmind Technology", alignment: "translate-y-8 -translate-x-16 2xl:-translate-x-[7rem]", image: "/images/journey/palmmind-logo.webp" },
   { progress: 0.69, year: "2024", text: "Completed Bsc.CSIT bachelor's degree", alignment: "-translate-y-8 -translate-x-[8rem]", image: "/images/journey/bmc.jpeg" },
 ];
 
@@ -228,7 +228,7 @@ const Page = () => {
 
       const tl = gsap.timeline({ paused: true });
       tl.to(menu, {
-        width: "45rem",
+        width: "35vw",
         height: "100dvh",
         duration: 0.6,
         ease: "power3.in",
@@ -508,7 +508,6 @@ const Page = () => {
           const pct = self.progress * 100;
           gsap.to(".progress-line", {
             width: `${pct}%`,
-            height: `${2 + self.progress * 3}px`,
             marginTop: `-${self.progress * 1.5}px`,
             duration: 0,
           });
@@ -584,7 +583,7 @@ const Page = () => {
             {menuItems.map((item, i) => (
               <Link href={`#${item.toLowerCase().replace(/\s/g, "-")}`} key={i} className="flex w-full h-full menu-item cursor-pointer overflow-hidden">
                 {item.split("").map((e, index) => (
-                  <span key={index} className="text-white text-[8vw] font-bold leading-[0.95] relative overflow-hidden">
+                  <span key={index} className="text-white text-lg md:text-[2rem] xl:text-[7rem] 2xl:text-[9rem] font-bold leading-[0.95] relative overflow-hidden">
                     <span className="inline-block">{e}</span>
                     <div className="text-gray-300 absolute top-[100%] left-0 inline-block">{e}</div>
                   </span>
@@ -642,7 +641,7 @@ const Page = () => {
 
           <div className="flex flex-col gap-12 row-start-2 lg:row-start-auto">
 
-            <div className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight font-light about-text-container" style={{ fontFamily: "var(--font-inter)" }}>
+            <div className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl tracking-tight font-light about-text-container" style={{ fontFamily: "var(--font-inter)" }}>
               {ABOUT_TEXT.split(" ").map((word, i) => (
                 <span key={i} className="inline-block overflow-hidden mr-[0.25em] py-1">
                   <span className="about-line inline-block">{word}</span>
@@ -662,7 +661,7 @@ const Page = () => {
               <div className="flex justify-between gap-6 mt-14">
                 {stats.map((stat, i) => (
                   <div key={i} className="about-stat">
-                    <span className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl flex items-center gap-4 font-light">
+                    <span className="text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl flex items-center gap-4 font-light">
                       <span className="[&>svg]:size-7 sm:[&>svg]:size-10 md:[&>svg]:size-14 2xl:[&>svg]:size-16">
                         <stat.icon />
                       </span>
@@ -786,7 +785,7 @@ const Page = () => {
         </section>
 
         <div className=" svg-section bg-[#111111] overflow-hidden">
-          <div className=" svg-container flex justify-center items-center -translate-x-[34%] xl:-translate-x-[36%] relative">
+          <div className=" svg-container flex justify-center items-center -translate-x-[38%] 2xl:-translate-x-[36%] relative">
             <div
               className=" path-dot absolute w-10 2xl:w-12 aspect-square bg-white rounded-full z-10 pointer-events-none"
               style={{ transform: "translate(-50%, -50%)" }}
@@ -843,16 +842,18 @@ const Page = () => {
 
       </section>
 
-      <div id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:py-[3rem] 2xl:px-[5rem]  projects-section">
-        <div className="overflow-x-hidden w-full h-[80%] md:h-[85%]">
+      <div  style={{ fontFamily: "var(--font-inter)" }} id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:py-[3rem] 2xl:px-[5rem]  projects-section">
+        <div className="overflow-x-hidden w-full h-[75%] md:h-[80%]">
           <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
-              <div key={i} className="shrink-0 flex flex-col lg:grid  lg:grid-cols-[2.6fr_1fr] 2xl:grid-cols-[2.3fr_1fr] gap-6 xl:gap-10 2xl:gap-14 h-full w-full">
+              <div key={i} className="shrink-0 flex flex-col lg:grid  lg:grid-cols-[2.6fr_1fr] 2xl:grid-cols-[2fr_1fr] gap-6 xl:gap-10 2xl:gap-14 h-full w-full">
                 <div className={` w-full h-full`} >
                   <img src={project.image} alt={project.title} className="object-fill h-full w-full" />
                 </div>
                 <div className="flex flex-col justify-between project-text">
-                  <h1 className="tracking-widest text-xl md:text-4xl 2xl:text-6xl text-white">PROJECT {i + 1}</h1>
+                  <h1 className="tracking-widest text-xl text-white">
+                    PROJECT {i + 1}
+                  </h1>
                   <div className="space-y-4">
                     <h1 className="tracking-widest text-xl md:text-2xl 2xl:text-4xl text-white">{project.title}</h1>
                     <div>
@@ -862,7 +863,7 @@ const Page = () => {
                         ))
                       }
                     </div>
-                    <p style={{ fontFamily: "var(--font-inter)" }} className="text-sm xl:text-base 2xl:text-lg text-white">{project.description}</p>
+                    <p className="mt-8 text-sm xl:text-base 2xl:text-lg text-white">{project.description}</p>
 
                   </div>
                 </div>
@@ -872,9 +873,9 @@ const Page = () => {
         </div>
 
         <div className="relative mt-24 flex items-center">
-          <div className="progress-track w-full h-[2px] bg-white/15 relative">
+          <div className="progress-track w-full h-[1px] bg-white/15 relative">
             <div className="progress-line absolute top-0 left-0 h-full w-0 bg-white" />
-            <div className="progress-dot absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white" style={{ left: "0%" }} />
+            <div className="progress-dot absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white" style={{ left: "0%" }} />
           </div>
           <div className="ml-6 text-white/40 text-sm font-mono whitespace-nowrap progress-counter">
             01 / 0{projects.length}

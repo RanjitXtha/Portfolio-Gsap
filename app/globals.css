@@ -6,7 +6,7 @@
 
 
 .padding {
-    @apply px-6
+    @apply px-6 lg:px-10 2xl:px-12 3xl:px-14;
 }
 
 
