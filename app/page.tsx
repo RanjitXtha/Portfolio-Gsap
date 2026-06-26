@@ -785,7 +785,7 @@ const Page = () => {
         </section>
 
         <div className=" svg-section bg-[#111111] overflow-hidden">
-          <div className=" svg-container flex justify-center items-center -translate-x-[38%] 2xl:-translate-x-[36%] relative">
+          <div className=" svg-container flex justify-center items-center -translate-x-[38%] 2xl:-translate-x-[37%] relative">
             <div
               className=" path-dot absolute w-10 2xl:w-12 aspect-square bg-white rounded-full z-10 pointer-events-none"
               style={{ transform: "translate(-50%, -50%)" }}
@@ -824,13 +824,13 @@ const Page = () => {
               </div>
             ))}
 
-          <svg
-  className="w-[391px] md:w-[500px] 2xl:w-[782px]"
-  style={{ height: "auto" }}
-  viewBox="0 0 782 3297"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
+            <svg
+              className="w-[391px] md:w-[500px] 2xl:w-[782px]"
+              style={{ height: "auto" }}
+              viewBox="0 0 782 3297"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M99.5 6.74631C297.833 103.08 650.647 419.828 587.5 612.246C534.5 773.746 268 781.746 223 904.746C151.34 1100.62 656 1066.25 694 1203.25C751.705 1411.29 223 1330.25 223 1534.75C223 1778.25 759.246 1676.2 773.5 1893.25C784.5 2060.75 264 2110.25 245.5 2173.75C220.183 2260.65 737.422 2219.9 728.5 2376.25C718 2560.25 79 2401.36 593 2552.75C701.5 2584.7 194.5 2515.25 550.5 2603.25C773.5 2640.25 263 2654.75 524.5 2666.25C786 2677.75 520.579 2652.23 428 2746.75C237 2941.75 386.5 3289.25 0 3289.25"
                 stroke="#FFFEFE"
@@ -842,7 +842,7 @@ const Page = () => {
 
       </section>
 
-      <div  style={{ fontFamily: "var(--font-inter)" }} id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:py-[3rem] 2xl:px-[5rem]  projects-section">
+      <div style={{ fontFamily: "var(--font-inter)" }} id="projects" className="bg-[#111111]  h-screen px-4 lg:px-[2rem] xl:py-[3rem] 2xl:px-[5rem]  projects-section">
         <div className="overflow-x-hidden w-full h-[75%] md:h-[80%]">
           <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
