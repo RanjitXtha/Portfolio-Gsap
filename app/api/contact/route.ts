@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
-    const { firstName, lastName, email, message } = await req.json();
+    const { firstName, lastName, email, message } = await req.json() as any;
 
     // Basic validation
     if (!firstName || !lastName || !email || !message) {
