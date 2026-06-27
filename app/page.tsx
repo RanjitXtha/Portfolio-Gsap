@@ -267,6 +267,58 @@ const Page = () => {
       menu.addEventListener("mouseenter", handleEnter);
       menu.addEventListener("mouseleave", handleLeave);
 
+      const mainCursor = document.querySelector(".main-cursor");
+      const customCursor = document.querySelector(".custom-cursor");
+
+      const moveMain = gsap.quickTo(mainCursor, "x", {
+        duration: 0.1,
+        ease: "power3.out"
+      });
+
+      const moveMainY = gsap.quickTo(mainCursor, "y", {
+        duration: 0.1,
+        ease: "power3.out"
+      });
+
+      const moveCustom = gsap.quickTo(customCursor, "x", {
+        duration: 0.5,
+        ease: "back.out"
+      });
+
+      const moveCustomY = gsap.quickTo(customCursor, "y", {
+        duration: 0.5,
+        ease: "back.out"
+      });
+
+      document.addEventListener("mousemove", (e: MouseEvent) => {
+        moveMain(e.clientX);
+        moveMainY(e.clientY);
+
+        moveCustom(e.clientX);
+        moveCustomY(e.clientY);
+      });
+
+      const images = document.querySelectorAll(".view-work img");
+      images.forEach((img) => {
+
+        gsap.fromTo(img, { y: -100 }, {
+          y: 5,
+          scrollTrigger: {
+            trigger: img,
+            scrub: 1,
+          }
+        });
+
+        img?.addEventListener("mouseenter", () => {
+          gsap.to(".custom-cursor", { opacity: 1, scale: 1 });
+          gsap.to(".main-cursor", { opacity: 0, scale: 0 });
+        });
+        img?.addEventListener("mouseleave", () => {
+          gsap.to(".custom-cursor", { opacity: 0, scale: 0 });
+          gsap.to(".main-cursor", { opacity: 1, scale: 1 });
+        });
+      });
+
       ScrollTrigger.create({
         trigger: ".hero",
         start: "top top",
@@ -544,7 +596,7 @@ const Page = () => {
       scrollTrigger: {
         trigger: ".gallery-section",
         start: "top top",
-        end: "bottom+=1500 top",
+        end: "bottom+=800 top",
         scrub: 1,
         pin: true,
       },
@@ -552,6 +604,32 @@ const Page = () => {
 
     return () => { ctx.revert(); };
   }, []);
+
+  const [formState, setFormState] = useState({
+    firstName: "", lastName: "", email: "", message: "",
+  });
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleFormSubmit = async () => {
+    if (!formState.firstName || !formState.lastName || !formState.email || !formState.message) return;
+    setFormStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+      if (!res.ok) throw new Error();
+      setFormStatus("success");
+      setFormState({ firstName: "", lastName: "", email: "", message: "" });
+    } catch {
+      setFormStatus("error");
+    }
+  };
 
   return (
     <div className="home relative bg-white text-[#111111]">
@@ -596,12 +674,12 @@ const Page = () => {
 
       <section className="main-body">
 
-        <div id="home" className="hero relative w-full h-screen text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
-          <div className="about-image absolute top-[50vh] left-1/2 w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
+        <div id="home" className="hero relative w-full h-screen text-[12rem] lg:text-[12rem] xl:text-[14rem] flex flex-col items-center justify-between overflow-x-hidden">
+          <div className="about-image absolute top-[50vh] left-1/2 w-[17rem] xl:w-64 2xl:w-48 aspect-3/4 -rotate-12 bg-white z-99 max-h-screen overflow-hidden">
             <video src="/videos/portfolio.mp4" autoPlay muted loop className="w-full h-full object-cover"></video>
           </div>
           <div className="first-name w-full flex justify-center relative">
-            <h1 className="flex overflow-hidden translate-y-16">
+            <h1 className="flex overflow-hidden translate-y-32 md:translate-y-16">
               {"RANJIT".split("").map((char, i) => (
                 <span key={i} className="overflow-hidden">
                   <span className="letter inline-block">{char}</span>
@@ -619,7 +697,7 @@ const Page = () => {
 
           </div>
 
-          <div className="last-name w-full flex justify-center relative">
+          <div className="last-name w-full flex justify-center relative -translate-y-32 md:-translate-y-0">
             <h1 className="flex overflow-hidden -z-2">
               {"SHRESTHA".split("").map((char, i) => (
                 <span key={i} className="overflow-hidden">
@@ -627,11 +705,27 @@ const Page = () => {
                 </span>
               ))}
             </h1>
-            <div className=" hidden lg:flex absolute tracking-[4px]  2xl:tracking-[6px] text-sm  left-[10%]  xl:left-[12%] 2xl:left-[18%] flex-col gap-4 -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>
-              <a>[ GITHUB ]</a>
-              <a>[ LINKEDIN ]</a>
-              <a>[ EMAIL ]</a>
-              <a>[ INSTAGRAM ]</a>
+            <div className=" hidden lg:flex absolute tracking-[4px]  2xl:tracking-[6px] text-sm left-[18%] 2xl:left-[24%] flex-col gap-4 -translate-x-1/2 z-50 bottom-17" style={{ fontFamily: "var(--font-inter)" }}>
+              <span className="hidden lg:block overflow-hidden text-sm tracking-[4px]  2xl:tracking-[6px] left-[82%] xl:left-[80%] 2xl:left-[76%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>
+                <a href="https://github.com/RanjitXtha" target="_blank" rel="noopener noreferrer" className="inline-block hero-location whitespace-nowrap">
+                  {`[ GITHUB ]`}
+                </a>
+              </span>
+              <span className="hidden lg:block  overflow-hidden text-sm tracking-[4px]  2xl:tracking-[6px] left-[82%] xl:left-[80%] 2xl:left-[76%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>
+                <a href="https://www.linkedin.com/in/ranjit-shrestha-b3a9b2308/" target="_blank" rel="noopener noreferrer" className="inline-block hero-location whitespace-nowrap">
+                  {`[ LINKEDIN ]`}
+                </a>
+              </span>
+              <span className="hidden lg:block  overflow-hidden text-sm tracking-[4px]  2xl:tracking-[6px] left-[82%] xl:left-[80%] 2xl:left-[76%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>
+                <a href="mailto:shrestha.ranjit.np@gmail.com" className="inline-block hero-location whitespace-nowrap">
+                  {`[ EMAIL ]`}
+                </a>
+              </span>
+              <span className="hidden lg:block  overflow-hidden text-sm tracking-[4px]  2xl:tracking-[6px] left-[82%] xl:left-[80%] 2xl:left-[76%]  -translate-x-1/2 z-50 bottom-2" style={{ fontFamily: "var(--font-inter)" }}>
+                <a href="https://www.instagram.com/shrestha.ranjit.np/" target="_blank" rel="noopener noreferrer" className="inline-block hero-location whitespace-nowrap">
+                  {`[ INSTAGRAM ]`}
+                </a>
+              </span>
             </div>
             {/* <span >{`[ SHRESTHA.RANJIT.NP@GMAIL.COM ]`}</span> */}
           </div>
@@ -649,7 +743,7 @@ const Page = () => {
               ))}
             </div>
 
-            <div className="text-sm  sm:text-base md:text-lg lg:text-xl order-2 lg:order-1 font-normal w-full max-w-3xl ml-0 lg:ml-[30%] font-inter tracking-tight" style={{ fontFamily: "var(--font-inter)" }}>
+            <div className="text-sm  sm:text-base md:text-lg lg:text-xl order-2 lg:order-1 font-normal w-full max-w-5xl ml-0  font-inter tracking-tight leading-6" style={{ fontFamily: "var(--font-inter)" }}>
               <p className="text-[#666666]">
                 {ABOUT_PARA.split(" ").map((word, i) => (
                   <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
@@ -658,7 +752,7 @@ const Page = () => {
                 ))}
               </p>
 
-              <div className="flex justify-between gap-6 mt-14">
+              <div className="flex justify-between gap-6 mt-14 max-w-3xl">
                 {stats.map((stat, i) => (
                   <div key={i} className="about-stat">
                     <span className="text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl flex items-center gap-4 font-light">
@@ -784,7 +878,7 @@ const Page = () => {
           </section>
         </section>
 
-        <div className=" svg-section bg-[#111111] overflow-hidden">
+        <div className=" svg-section bg-[#111111] overflow-hidden" style={{ fontFamily: "var(--font-inter)" }}>
           <div className=" svg-container flex justify-center items-center -translate-x-[38%] 2xl:-translate-x-[37%] relative">
             <div
               className=" path-dot absolute w-10 2xl:w-12 aspect-square bg-white rounded-full z-10 pointer-events-none"
@@ -797,7 +891,7 @@ const Page = () => {
                 className={`milestone-${i}  absolute z-20 opacity-0 scale-0 pointer-events-none w-full`}
                 style={{ transform: "translate(-50%, -50%)" }}
               >
-                <div className="w-14 2xl:w-20 aspect-square rounded-full translate-[-50%] bg-white" />
+                <div className="w-14 2xl:w-16 aspect-square rounded-full translate-[-50%] bg-white" />
                 <div className="absolute top-0 ">
                   <p className={`text-white font-bold  text-base lg:text-lg 2xl:text-3xl leading-none ${m.alignment}`}>{m.year}</p>
                   <div className="text-gray-400 text-sm xl:text-base 2xl:text-xl translate-x-[4rem] 2xl:translate-x-[8rem] -translate-y-10 relative flex w-full gap-12 2xl:gap-20">
@@ -816,7 +910,7 @@ const Page = () => {
                       <img
                         src={m.image}
                         alt={m.year}
-                        className="w-[20rem] lg:w-[26rem] 2xl:w-[38rem] aspect-video object-contain top-1/2 -translate-y-1/2"
+                        className={`${(i === 4 || i === 5) && "max-w-[24rem]"} w-[20rem] lg:w-[26rem] 2xl:w-[38rem] aspect-video object-contain top-1/2 -translate-y-1/2`}
                       />
                     )}
                   </div>
@@ -847,7 +941,7 @@ const Page = () => {
           <div className="projects flex w-full h-full gap-10 2xl:gap-14">
             {projects.map((project, i) => (
               <div key={i} className="shrink-0 flex flex-col lg:grid  lg:grid-cols-[2.6fr_1fr] 2xl:grid-cols-[2fr_1fr] gap-6 xl:gap-10 2xl:gap-14 h-full w-full">
-                <div className={` w-full h-full`} >
+                <div className={` w-full h-full view-work`} >
                   <img src={project.image} alt={project.title} className="object-fill h-full w-full" />
                 </div>
                 <div className="flex flex-col justify-between project-text">
@@ -907,7 +1001,7 @@ const Page = () => {
         </div>
         <div className="relative max-w-[75%] mx-auto gallery">
           {gallery.map((item, i) => (
-            <div key={i} className={`absolute overflow-hidden ${item.position}`}>
+            <div key={i} className={`absolute overflow-hidden ${item.position} view-work`}>
               <img
                 src={item.image}
                 alt={`Gallery item ${i + 1}`}
@@ -933,18 +1027,60 @@ const Page = () => {
 
           <div style={{ fontFamily: "var(--font-inter)" }} className="grid grid-cols-2 gap-x-6 3xl:gap-y-14 text-sm text-gray-600">
             <div className="flex flex-col">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="First Name" />
+              <input
+                name="firstName"
+                value={formState.firstName}
+                onChange={handleFormChange}
+                className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent"
+                type="text"
+                placeholder="First Name"
+              />
             </div>
             <div className="flex flex-col">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="text" placeholder="Last Name" />
+              <input
+                name="lastName"
+                value={formState.lastName}
+                onChange={handleFormChange}
+                className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent"
+                type="text"
+                placeholder="Last Name"
+              />
             </div>
             <div className="flex flex-col col-span-2">
-              <input className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent" type="email" placeholder="Email Address" />
+              <input
+                name="email"
+                value={formState.email}
+                onChange={handleFormChange}
+                className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 bg-transparent"
+                type="email"
+                placeholder="Email Address"
+              />
             </div>
             <div className="col-span-2 flex flex-col">
-              <textarea className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 resize-none bg-transparent" placeholder="Write your message here..." rows={1} />
+              <textarea
+                name="message"
+                value={formState.message}
+                onChange={handleFormChange}
+                className="w-full border-b border-gray-400 focus:outline-0 text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-black placeholder:text-[#111111] py-3 resize-none bg-transparent"
+                placeholder="Write your message here..."
+                rows={1}
+              />
             </div>
-            <button className="text-base xl:text-lg bg-[#111111] justify-self-start px-6 max-h-14 py-3 mt-8 lg:mt-0 text-white">Send Message</button>
+            <div className="flex items-center gap-6 col-span-2">
+              <button
+                onClick={handleFormSubmit}
+                disabled={formStatus === "sending"}
+                className="text-base xl:text-lg bg-[#111111] justify-self-start px-6 max-h-14 py-3 mt-8 lg:mt-0 text-white disabled:opacity-50"
+              >
+                {formStatus === "sending" ? "Sending..." : "Send Message"}
+              </button>
+              {formStatus === "success" && (
+                <p className="text-sm text-green-600 mt-8 lg:mt-0">Message sent! I'll get back to you soon.</p>
+              )}
+              {formStatus === "error" && (
+                <p className="text-sm text-red-500 mt-8 lg:mt-0">Something went wrong. Please try again.</p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -979,22 +1115,22 @@ const Page = () => {
                 <p>Lalitpur, Nepal</p>
                 <div className="flex gap-6 items-end">
                   <p>shrestha.ranjit.np@gmail.com</p>
-                  <a href="">
+                  <a href="https://www.instagram.com/shrestha.ranjit.np/" target="_blank" rel="noopener noreferrer">
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                       <path d="M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
                     </svg>
                   </a>
-                  <a href="">
+                  <a href="https://www.linkedin.com/in/ranjit-shrestha-b3a9b2308/" target="_blank" rel="noopener noreferrer">
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                       <path d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z" />
                     </svg>
                   </a>
-                  <a href="">
+                  <a href="https://github.com/RanjitXtha" target="_blank" rel="noopener noreferrer">
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                       <path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM252.8 8c-138.7 0-244.8 105.3-244.8 244 0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1 100-33.2 167.8-128.1 167.8-239 0-138.7-112.5-244-251.2-244zM105.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
                     </svg>
                   </a>
-                  <a href="">
+                  <a href="https://open.spotify.com/playlist/37i9dQZF1Fa1IIVtEpGUcU" target="_blank" rel="noopener noreferrer">
                     <svg className="w-8 fill-white stroke-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496zM356.7 372.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z" /></svg>
                   </a>
                 </div>
@@ -1004,6 +1140,12 @@ const Page = () => {
         </div>
       </footer>
 
+
+      <div className="fixed z-100 top-0 left-0 opacity-0 scale-0 custom-cursor text-2xl w-32 h-32  pointer-events-none -translate-1/2 hidden md:flex justify-center items-center rounded-full text-white bg-black shadow">
+        VIEW WORK
+      </div>
+
+      <div className="main-cursor fixed z-100 top-0 left-0 text-2xl w-6 h-6 pointer-events-none -translate-1/2 hidden md:flex justify-center items-center rounded-full mix-blend-difference bg-white" />
     </div>
   );
 };
