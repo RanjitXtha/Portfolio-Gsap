@@ -9,15 +9,22 @@
   @apply px-6 lg:px-10 2xl:px-12 3xl:px-14;
 }
 
-* {
-  cursor: none !important;
-}
+
 
 @layer base {
   html {
     font-size: 16px;
+    cursor: none;
   }
 
+  * {
+    cursor: none !important;
+  }
+
+  .main-cursor,
+  .custom-cursor {
+    pointer-events: none;
+  }
 
   @media (max-width: 1440px) {
     html {

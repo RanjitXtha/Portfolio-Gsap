@@ -874,7 +874,7 @@ const Page = () => {
 
         <section id="my-journey" className="journey hidden md:block">
           <section className="my-journey pt-24 h-screen bg-white flex justify-center items-center">
-            <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
+            <h1 className="text-[12rem] whitespace-nowrap text-[#111111] pointer-events-none">MY JOURNEY</h1>
           </section>
         </section>
 
