@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-    --breakpoint-3xl: 1570px;
+  --breakpoint-3xl: 1570px;
 }
 
 
 .padding {
-    @apply px-6 lg:px-10 2xl:px-12 3xl:px-14;
+  @apply px-6 lg:px-10 2xl:px-12 3xl:px-14;
 }
 
-
+* {
+  cursor: none !important;
+}
 
 @layer base {
   html {
     font-size: 16px;
-    cursor: none;
   }
 
-  
+
   @media (max-width: 1440px) {
     html {
       font-size: 14px;
@@ -47,8 +48,10 @@
   }
 
   * {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 

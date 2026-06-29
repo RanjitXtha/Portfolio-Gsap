@@ -636,7 +636,7 @@ const Page = () => {
 
       <header className="padding uppercase hidden md:flex text-lg lg:text-xl font-extralight fixed w-full justify-between py-6 z-50 mix-blend-difference">
         <Link href="/" className="text-white">RANJIT XTHA</Link>
-        <div ref={navLinksRef} className="flex gap-8" >
+        <div ref={navLinksRef} className="flex gap-8 text-base" style={{ fontFamily: "var(--font-inter)" }}>
           {
             menuItems.map((item, i) => (
               <Link key={i} href={`#${item.toLowerCase().replace(/\s/g, "-")}`} className="text-white">
@@ -873,7 +873,7 @@ const Page = () => {
         </section>
 
         <section id="my-journey" className="journey hidden md:block">
-          <section className="my-journey pt-24 overflow-clip h-screen bg-white flex justify-center items-center">
+          <section className="my-journey pt-24 h-screen bg-white flex justify-center items-center">
             <h1 className="text-[12rem] whitespace-nowrap text-[#111111]">MY JOURNEY</h1>
           </section>
         </section>
