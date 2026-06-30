@@ -1146,6 +1146,7 @@ const Page = () => {
       </div>
 
       <div className="main-cursor fixed z-100 top-0 left-0 text-2xl w-6 h-6 pointer-events-none -translate-1/2 hidden md:flex justify-center items-center rounded-full mix-blend-difference bg-white" />
+      <p>TEST</p>
     </div>
   );
 };
